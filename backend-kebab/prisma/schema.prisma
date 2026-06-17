@@ -38,3 +38,21 @@ model Outlet {
   cityId    Int
   city      City    @relation(fields: [cityId], references: [id])
 }
+
+model Gallery {
+  id        Int     @id @default(autoincrement())
+  image_url String
+  note      String? // Tanda tanya berarti boleh dikosongin
+}
+
+model HeroSlide {
+  id        Int     @id @default(autoincrement())
+  image_url String
+  note      String?
+}
+
+model Setting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String
+}
