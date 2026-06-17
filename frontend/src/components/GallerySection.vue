@@ -1,17 +1,18 @@
 <script setup>
 import ScrollReveal from './ScrollReveal.vue'
 
+// Kita tambahkan properti 'image' yang mengarah ke file di folder public
 const galleryImages = [
-  { id: 1, title: "Booth Modern" },
-  { id: 2, title: "Menu Kebab" },
-  { id: 3, title: "Happy Partner" },
-  { id: 4, title: "Grand Opening" },
-  { id: 5, title: "Kebab Jumbo" },
-  { id: 6, title: "Team Training" },
-  { id: 7, title: "Customer Happy" },
-  { id: 8, title: "Outlet Malam" },
-  { id: 9, title: "Franchise Event" },
-  { id: 10, title: "Produk Fresh" },
+  { id: 1, title: "Booth Modern", image: "/galeri1.jpeg" },
+  { id: 2, title: "Menu Kebab", image: "/galeri2.jpeg" },
+  { id: 3, title: "Happy Partner", image: "/galeri3.jpeg" },
+  { id: 4, title: "Grand Opening", image: "/galeri4.jpeg" },
+  { id: 5, title: "Kebab Jumbo", image: "/galeri5.jpeg" },
+  { id: 6, title: "Team Training", image: "/galeri6.jpeg" },
+  { id: 7, title: "Customer Happy", image: "/galeri7.jpeg" },
+  { id: 8, title: "Outlet Malam", image: "/galeri8.jpeg" },
+  { id: 9, title: "Franchise Event", image: "/galeri9.jpeg" },
+  { id: 10, title: "Produk Fresh", image: "/galeri10.jpeg" },
 ]
 </script>
 
@@ -32,7 +33,7 @@ const galleryImages = [
         >
           <div class="group relative aspect-[251/230] rounded-3xl overflow-hidden border-2 border-black shadow-[0_8px_4px_rgba(0,0,0,0.25)] cursor-pointer">
             <img
-              src="/placeholder.jpg"
+              :src="image.image"
               :alt="image.title"
               class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
