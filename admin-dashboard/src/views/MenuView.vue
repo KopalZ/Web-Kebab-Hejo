@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { Save, Plus, X } from 'lucide-vue-next'
+import { Save, Plus } from 'lucide-vue-next'
 import { API_BASE } from '@/api.js'
 
 const categories = ref([])
@@ -8,10 +8,6 @@ const products = ref([])
 const activeCategory = ref('Semua')
 const loading = ref(true)
 const error = ref(null)
-
-const showEditModal = ref(false)
-const editForm = ref({ id: null, name: '', price: 0, categoryId: null, image_url: '' })
-const saving = ref(false)
 
 const filterOptions = computed(() => {
   const names = categories.value.map((c) => c.name)
@@ -39,8 +35,7 @@ async function loadData() {
       cat.products.map((p) => ({
         ...p,
         image_url: imageUrl(p.image_url),
-        categoryName: cat.name,
-        categoryId: cat.id
+        categoryName: cat.name
       }))
     )
   } catch (e) {
@@ -55,14 +50,14 @@ onMounted(loadData)
 
 function getFallbackProducts() {
   return [
-    { id: 1, name: 'Beef Kejo Small', price: 10000, categoryName: 'Kebab', categoryId: 1, image_url: null },
-    { id: 2, name: 'Beef Kejo Medium', price: 12000, categoryName: 'Kebab', categoryId: 1, image_url: null },
-    { id: 3, name: 'Beef Kejo Large', price: 15000, categoryName: 'Kebab', categoryId: 1, image_url: null },
-    { id: 4, name: 'Kebab Pot', price: 20000, categoryName: 'Kebab Pot', categoryId: 2, image_url: null },
-    { id: 5, name: 'Kebab Burger', price: 10000, categoryName: 'Burger', categoryId: 3, image_url: null },
-    { id: 6, name: 'Kebab HotDog', price: 10000, categoryName: 'HotDog', categoryId: 4, image_url: null },
-    { id: 7, name: 'Pizza Kebab', price: 20000, categoryName: 'Pizza', categoryId: 5, image_url: null },
-    { id: 8, name: 'Canai Katsuke', price: 10000, categoryName: 'Canai', categoryId: 6, image_url: null }
+    { id: 1, name: 'Beef Kejo Small', price: 10000, categoryName: 'Kebab', image_url: null },
+    { id: 2, name: 'Beef Kejo Medium', price: 12000, categoryName: 'Kebab', image_url: null },
+    { id: 3, name: 'Beef Kejo Large', price: 15000, categoryName: 'Kebab', image_url: null },
+    { id: 4, name: 'Kebab Pot', price: 20000, categoryName: 'Kebab Pot', image_url: null },
+    { id: 5, name: 'Kebab Burger', price: 10000, categoryName: 'Burger', image_url: null },
+    { id: 6, name: 'Kebab HotDog', price: 10000, categoryName: 'HotDog', image_url: null },
+    { id: 7, name: 'Pizza Kebab', price: 20000, categoryName: 'Pizza', image_url: null },
+    { id: 8, name: 'Canai Katsuke', price: 10000, categoryName: 'Canai', image_url: null }
   ]
 }
 
@@ -76,41 +71,6 @@ function saveChanges() {
 
 function addMenu() {
   alert('Form tambah menu (hubungkan ke API backend).')
-}
-
-function editProduct(product) {
-  editForm.value = {
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    categoryId: product.categoryId,
-    image_url: product.image_url || ''
-  }
-  showEditModal.value = true
-}
-
-async function saveEdit() {
-  if (!editForm.value.name.trim()) return alert('Nama menu tidak boleh kosong')
-  saving.value = true
-  try {
-    const res = await fetch(API_BASE + '/api/products/' + editForm.value.id, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: editForm.value.name,
-        price: editForm.value.price,
-        categoryId: editForm.value.categoryId,
-        image_url: editForm.value.image_url || null
-      })
-    })
-    if (!res.ok) throw new Error('Gagal mengedit menu')
-    showEditModal.value = false
-    await loadData()
-  } catch (e) {
-    alert(e.message)
-  } finally {
-    saving.value = false
-  }
 }
 
 async function deleteProduct(product) {
@@ -173,47 +133,8 @@ async function deleteProduct(product) {
         </div>
         <div class="menu-card__actions">
           <button type="button" @click="deleteProduct(product)">Hapus</button>
-          <button type="button" @click="editProduct(product)">Edit</button>
         </div>
       </article>
-    </div>
-
-    <!-- Modal Edit -->
-    <div v-if="showEditModal" class="modal-overlay" @click.self="showEditModal = false">
-      <div class="modal-box">
-        <div class="modal-header">
-          <h3>Edit Menu</h3>
-          <button type="button" class="modal-close" @click="showEditModal = false">
-            <X :size="20" />
-          </button>
-        </div>
-        <div class="modal-body">
-          <label class="modal-label">
-            Nama Menu
-            <input v-model="editForm.name" type="text" class="modal-input" placeholder="Nama menu" />
-          </label>
-          <label class="modal-label">
-            Harga
-            <input v-model.number="editForm.price" type="number" class="modal-input" placeholder="Harga" />
-          </label>
-          <label class="modal-label">
-            Kategori
-            <select v-model="editForm.categoryId" class="modal-input">
-              <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
-            </select>
-          </label>
-          <label class="modal-label">
-            URL Gambar
-            <input v-model="editForm.image_url" type="text" class="modal-input" placeholder="URL gambar (opsional)" />
-          </label>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn-cancel" @click="showEditModal = false">Batal</button>
-          <button type="button" class="btn-primary" :disabled="saving" @click="saveEdit">
-            {{ saving ? 'Menyimpan...' : 'Simpan' }}
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 </template>
