@@ -168,7 +168,6 @@ async function deleteProduct(product) {
           <span v-else>Tanpa foto</span>
         </div>
         <div class="menu-card__body">
-          <span class="menu-card__tag">{{ product.categoryName }}</span>
           <div class="menu-card__name">{{ product.name }}</div>
           <div class="menu-card__price">Rp {{ formatPrice(product.price) }}</div>
         </div>
