@@ -202,6 +202,41 @@ app.post('/api/settings/franchise-link', async (req, res) => {
   }
 });
 
+async function initAdmin() {
+  try {
+    const adminCount = await prisma.admin.count();
+    if (adminCount === 0) {
+      await prisma.admin.create({
+        data: { username: 'admin', password: 'password123' }
+      });
+      console.log('✅ Akun admin default otomatis dibuat! (username: admin, password: password123)');
+    }
+  } catch (error) {
+    console.error("Gagal inisialisasi admin", error);
+  }
+}
+initAdmin();
+
+// API Login untuk mengecek kecocokan data
+app.post('/api/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    
+    // Cari admin di database berdasarkan username
+    const admin = await prisma.admin.findUnique({ where: { username } });
+
+    // Cek apakah admin ada dan passwordnya cocok
+    if (!admin || admin.password !== password) {
+      return res.status(401).json({ error: "Username atau password salah!" });
+    }
+
+    // Kalau cocok, kasih token (bisa dikembangkan jadi JWT nantinya)
+    res.json({ message: "Login sukses", token: "token-resmi-kebab-hejo-123" });
+  } catch (error) {
+    res.status(500).json({ error: "Terjadi kesalahan pada server" });
+  }
+});
+
 // Menyalakan server
 app.listen(3000, () => {
   console.log('Backend kebab nyala di http://localhost:3000');

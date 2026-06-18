@@ -14,22 +14,37 @@ onMounted(() => {
   sessionStorage.removeItem('admin_token')
 })
 
-function handleLogin() {
+async function handleLogin() {
   if (!email.value || !password.value) {
     errorMsg.value = 'Silakan isi email/username dan password.'
     return
   }
-  if (password.value.length < 8) {
-    errorMsg.value = 'Password minimal harus 8 karakter.'
-    return
+  
+  try {
+    const res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        username: email.value, 
+        password: password.value 
+      })
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      errorMsg.value = data.error || 'Login gagal.'
+      return
+    }
+
+    sessionStorage.setItem('admin_token', data.token)
+    errorMsg.value = ''
+    
+    router.push('/')
+    
+  } catch (error) {
+    errorMsg.value = 'Server sedang bermasalah atau mati.'
   }
-  
-  // Set mock token in sessionStorage
-  sessionStorage.setItem('admin_token', 'mock_token_value')
-  errorMsg.value = ''
-  
-  // Redirect to dashboard home
-  router.push('/')
 }
 </script>
 
@@ -55,7 +70,7 @@ function handleLogin() {
             <input 
               v-model="email" 
               type="text" 
-              placeholder="Example@email.com" 
+              placeholder="admin" 
               :class="$style.inputElement" 
             />
           </div>

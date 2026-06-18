@@ -56,3 +56,9 @@ model Setting {
   key   String @unique
   value String
 }
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+}
