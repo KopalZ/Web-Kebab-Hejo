@@ -4,6 +4,7 @@ import { ShieldCheck, MapPin } from 'lucide-vue-next'
 import Button from './ui/Button.vue'
 import ScrollReveal from './ScrollReveal.vue'
 import logo from '@/assets/logo.jpeg'
+import { API_BASE } from '@/api.js'
 
 const floatingBadges = [
   { icon: ShieldCheck, text: "Halal Certified", delay: 0 },
@@ -18,13 +19,13 @@ let slideInterval = null
 
 onMounted(async () => {
   try {
-    const resLink = await fetch('http://localhost:3000/api/settings/franchise-link')
+    const resLink = await fetch(API_BASE + '/api/settings/franchise-link')
     const dataLink = await resLink.json()
     if (dataLink && dataLink.value) franchiseLink.value = dataLink.value
   } catch (e) { console.error("Gagal ambil link", e) }
 
   try {
-    const resSlides = await fetch('http://localhost:3000/api/hero-slides')
+    const resSlides = await fetch(API_BASE + '/api/hero-slides')
     const dataSlides = await resSlides.json()
     if (dataSlides.length > 0) slides.value = dataSlides
   } catch (e) { console.error("Gagal ambil slide", e) }

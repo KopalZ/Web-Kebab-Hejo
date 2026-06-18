@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Plus, Trash2, UploadCloud, X } from 'lucide-vue-next'
+import { API_BASE } from '@/api.js'
 
 const galleryItems = ref([])
 const pendingUploads = ref([]) // Variabel baru buat nampung antrean banyak file
@@ -11,7 +12,7 @@ onMounted(async () => {
 
 async function fetchGallery() {
   try {
-    const res = await fetch('http://localhost:3000/api/gallery')
+    const res = await fetch(API_BASE + '/api/gallery')
     galleryItems.value = await res.json()
   } catch (error) {
     console.error('Gagal mengambil data galeri', error)
@@ -53,7 +54,7 @@ async function uploadAllPending() {
   try {
     // Pake Promise.all biar nge-push banyak data sekaligus secara paralel (lebih cepat)
     await Promise.all(pendingUploads.value.map(async (item) => {
-      await fetch('http://localhost:3000/api/gallery', {
+      await fetch(API_BASE + '/api/gallery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -77,7 +78,7 @@ async function uploadAllPending() {
 async function removeItem(id) {
   if (confirm('Apakah Anda yakin ingin menghapus foto ini permanen?')) {
     try {
-      await fetch(`http://localhost:3000/api/gallery/${id}`, {
+      await fetch(API_BASE + `/api/gallery/${id}`, {
         method: 'DELETE'
       })
       await fetchGallery()

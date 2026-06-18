@@ -3,6 +3,7 @@
 import { ref, computed, onMounted } from 'vue'
 import ScrollReveal from './ScrollReveal.vue'
 import Button from './ui/Button.vue'
+import { API_BASE } from '@/api.js'
 
 // Kita bikin ref kosong dulu, nanti diisi otomatis dari database
 const menuCategories = ref(["Semua"]) 
@@ -13,7 +14,7 @@ const activeCategory = ref("Semua")
 onMounted(async () => {
   try {
     // Nembak API Backend kamu
-    const response = await fetch('http://localhost:3000/api/menus')
+    const response = await fetch(API_BASE + '/api/menus')
     const data = await response.json()
 
     let allProducts = []

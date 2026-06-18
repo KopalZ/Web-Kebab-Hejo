@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import ScrollReveal from './ScrollReveal.vue'
+import { API_BASE } from '@/api.js'
 
 const cityRows = ref([])
 const activeCity = ref('')
@@ -8,7 +9,7 @@ const outletsByCity = ref({})
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/outlets')
+    const response = await fetch(API_BASE + '/api/outlets')
     const data = await response.json()
 
     const cities = []

@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import untitledBg from '@/assets/Untitled13_20260525215101.png'
+import { API_BASE } from '@/api.js'
 
 const router = useRouter()
 
@@ -21,7 +22,7 @@ async function handleLogin() {
   }
   
   try {
-    const res = await fetch('http://localhost:3000/api/login', {
+    const res = await fetch(API_BASE + '/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 

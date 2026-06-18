@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
+require('dotenv').config();
 
 const prisma = new PrismaClient(); 
 const app = express();
@@ -238,6 +239,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 // Menyalakan server
-app.listen(3000, () => {
-  console.log('Backend kebab nyala di http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log('Backend kebab nyala di http://localhost:' + PORT);
 });

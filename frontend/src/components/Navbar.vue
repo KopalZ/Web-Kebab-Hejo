@@ -8,7 +8,6 @@ const navLinks = [
   { href: '#menu', label: 'Menu' },
   { href: '#franchise', label: 'Franchise' },
   { href: '#coverage', label: 'Jangkauan' },
-  { href: '#testimonial', label: 'Testimoni' },
 ]
 
 const isScrolled = ref(false)

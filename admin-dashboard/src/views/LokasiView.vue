@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Plus } from 'lucide-vue-next'
+import { API_BASE } from '@/api.js'
 
 // Variabel penampung data dari database
 const locations = ref([])
@@ -18,7 +19,7 @@ onMounted(async () => {
 
 async function fetchLocations() {
   try {
-    const response = await fetch('http://localhost:3000/api/outlets')
+    const response = await fetch(API_BASE + '/api/outlets')
     const data = await response.json()
     
     // Simpan daftar kota untuk dropdown
@@ -57,7 +58,7 @@ async function addLocation() {
 
   try {
     // Kirim data baru ke backend
-    await fetch('http://localhost:3000/api/outlets', {
+    await fetch(API_BASE + '/api/outlets', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -83,7 +84,7 @@ async function removeLocation(id, nama) {
   if (confirm(`Apakah Anda yakin ingin menghapus cabang "${nama}" secara permanen?`)) {
     try {
       // Tembak API delete ke backend
-      await fetch(`http://localhost:3000/api/outlets/${id}`, {
+      await fetch(API_BASE + `/api/outlets/${id}`, {
         method: 'DELETE'
       })
       // Refresh tabel

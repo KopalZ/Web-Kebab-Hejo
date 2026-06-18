@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Save, Plus, Trash2 } from 'lucide-vue-next'
+import { API_BASE } from '@/api.js'
 
 const franchiseLink = ref('')
 const slides = ref([])
@@ -17,7 +18,7 @@ onMounted(async () => {
 async function fetchData() {
   // 1. Ambil Link Franchise
   try {
-    const resLink = await fetch('http://localhost:3000/api/settings/franchise-link')
+    const resLink = await fetch(API_BASE + '/api/settings/franchise-link')
     const dataLink = await resLink.json()
     if (dataLink && dataLink.value) {
       franchiseLink.value = dataLink.value
@@ -28,7 +29,7 @@ async function fetchData() {
 
   // 2. Ambil Daftar Slide
   try {
-    const resSlides = await fetch('http://localhost:3000/api/hero-slides')
+    const resSlides = await fetch(API_BASE + '/api/hero-slides')
     slides.value = await resSlides.json()
   } catch (error) {
     console.error("Gagal mengambil data slide", error)
@@ -42,7 +43,7 @@ async function saveLink() {
     return
   }
   try {
-    await fetch('http://localhost:3000/api/settings/franchise-link', {
+    await fetch(API_BASE + '/api/settings/franchise-link', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ value: franchiseLink.value })
@@ -67,7 +68,7 @@ async function addSlide() {
   }
 
   try {
-    await fetch('http://localhost:3000/api/hero-slides', {
+    await fetch(API_BASE + '/api/hero-slides', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -89,7 +90,7 @@ async function addSlide() {
 async function removeSlide(id) {
   if (confirm('Apakah Anda yakin ingin menghapus slide ini?')) {
     try {
-      await fetch(`http://localhost:3000/api/hero-slides/${id}`, {
+      await fetch(API_BASE + `/api/hero-slides/${id}`, {
         method: 'DELETE'
       })
       await fetchData()
