@@ -100,6 +100,27 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
+// --- API 6b: Buat edit Menu dari Admin ---
+app.put('/api/products/:id', async (req, res) => {
+  try {
+    const productId = parseInt(req.params.id);
+    const { name, price, categoryId, image_url } = req.body;
+    const updatedProduct = await prisma.product.update({
+      where: { id: productId },
+      data: {
+        name: name,
+        price: parseInt(price),
+        categoryId: parseInt(categoryId),
+        image_url: image_url
+      }
+    });
+    res.json(updatedProduct);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Gagal mengedit menu" });
+  }
+});
+
 // --- API 7: Ambil data Galeri ---
 app.get('/api/gallery', async (req, res) => {
   try {
