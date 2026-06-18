@@ -1,3 +1,14 @@
+/**
+ * API Test Suite - Backend Grand Kebab Hejo
+ *
+ * File ini ngetest semua endpoint API yang dipakai oleh:
+ * - Landing Page (frontend)  → tampil menu, galeri, hero slide, outlet, franchise link
+ * - Admin Dashboard          → CRUD menu, outlet, galeri, hero slide, franchise link, login
+ *
+ * Jalankan: npm run test:api (dari folder admin-dashboard)
+ * Total: 63 test | Pola: create → verify → cleanup (data test ga tertinggal di DB)
+ */
+
 const API_BASE = 'https://backend-kebab-production.up.railway.app';
 
 let passed = 0;
@@ -27,7 +38,11 @@ async function test(name, fn) {
   console.log('=== API Tests: Backend ===');
   console.log('Target: ' + API_BASE);
 
-  // --- Test 1: GET /api/menus ---
+  // ============================================
+  // READ TESTS (GET) - dipakai Landing Page + Admin Dashboard
+  // ============================================
+
+  // Ambil semua kategori + produk → dipakai Menu Section (landing page) & Katalog Menu (dashboard)
   await test('GET /api/menus returns categories with products', async () => {
     const res = await fetch(API_BASE + '/api/menus');
     assert(res.ok, 'Status is 200 OK (got ' + res.status + ')');
@@ -49,7 +64,7 @@ async function test(name, fn) {
     }
   });
 
-  // --- Test 2: GET /api/menus - all products have names ---
+  // Validasi semua produk punya nama (ga ada yang kosong) → penting buat tampilan kartu menu
   await test('All products across categories have non-empty names', async () => {
     const res = await fetch(API_BASE + '/api/menus');
     const data = await res.json();
@@ -68,7 +83,7 @@ async function test(name, fn) {
     assert(emptyNames === 0, 'No products with empty names (found ' + emptyNames + ' empty)');
   });
 
-  // --- Test 3: GET /api/outlets ---
+  // Ambil data kota + cabang → dipakai Coverage Section (landing page) & Lokasi (dashboard)
   await test('GET /api/outlets returns cities with outlets', async () => {
     const res = await fetch(API_BASE + '/api/outlets');
     assert(res.ok, 'Status is 200 OK (got ' + res.status + ')');
@@ -82,7 +97,7 @@ async function test(name, fn) {
     }
   });
 
-  // --- Test 4: GET /api/gallery ---
+  // Ambil foto galeri → dipakai Gallery Section (landing page) & Galeri (dashboard)
   await test('GET /api/gallery returns gallery data', async () => {
     const res = await fetch(API_BASE + '/api/gallery');
     assert(res.ok, 'Status is 200 OK (got ' + res.status + ')');
@@ -96,7 +111,7 @@ async function test(name, fn) {
     }
   });
 
-  // --- Test 5: GET /api/hero-slides ---
+  // Ambil slide hero → dipakai Hero Section carousel (landing page) & Hero (dashboard)
   await test('GET /api/hero-slides returns slides', async () => {
     const res = await fetch(API_BASE + '/api/hero-slides');
     assert(res.ok, 'Status is 200 OK (got ' + res.status + ')');
@@ -109,7 +124,21 @@ async function test(name, fn) {
     }
   });
 
-  // --- Test 6: POST /api/login - correct credentials ---
+  // Ambil link franchise → dipakai tombol "Gabung Franchise" (landing page) & Settings (dashboard)
+  await test('GET /api/settings/franchise-link returns link', async () => {
+    const res = await fetch(API_BASE + '/api/settings/franchise-link');
+    assert(res.ok, 'Status is 200 OK (got ' + res.status + ')');
+
+    const data = await res.json();
+    assert(typeof data.value === 'string', 'Setting has a value');
+    assert(data.key === 'franchise_link', 'Setting key is franchise_link');
+  });
+
+  // ============================================
+  // AUTH TESTS - dipakai Login View (admin dashboard)
+  // ============================================
+
+  // Login sukses → admin dashboard redirect ke halaman utama
   await test('POST /api/login with correct credentials', async () => {
     const res = await fetch(API_BASE + '/api/login', {
       method: 'POST',
@@ -124,7 +153,7 @@ async function test(name, fn) {
     assert(typeof data.token === 'string', 'Response contains a token');
   });
 
-  // --- Test 7: POST /api/login - wrong credentials ---
+  // Login gagal → tampilkan pesan error di form login
   await test('POST /api/login with wrong credentials returns 401', async () => {
     const res = await fetch(API_BASE + '/api/login', {
       method: 'POST',
@@ -138,7 +167,10 @@ async function test(name, fn) {
     assert(typeof data.error === 'string', 'Response contains error message');
   });
 
-  // --- Test 8: CORS headers ---
+  // ============================================
+  // CORS TEST - harus allow kedua frontend (landing page + dashboard)
+  // ============================================
+
   await test('CORS headers are set correctly', async () => {
     const res = await fetch(API_BASE + '/api/menus', {
       method: 'OPTIONS'
@@ -148,7 +180,7 @@ async function test(name, fn) {
     assert(allowOrigin === '*', 'Access-Control-Allow-Origin is *');
   });
 
-  // --- Test 9: DELETE non-existent product returns error ---
+  // Error handling: hapus produk yang ga ada → harusnya error, bukan crash
   await test('DELETE non-existent product returns error', async () => {
     const res = await fetch(API_BASE + '/api/products/999999', {
       method: 'DELETE'
@@ -157,21 +189,14 @@ async function test(name, fn) {
     assert(!res.ok || res.status === 500, 'Deleting non-existent product returns error (got ' + res.status + ')');
   });
 
-  // --- Test 10: GET /api/settings/franchise-link ---
-  await test('GET /api/settings/franchise-link returns link', async () => {
-    const res = await fetch(API_BASE + '/api/settings/franchise-link');
-    assert(res.ok, 'Status is 200 OK (got ' + res.status + ')');
-
-    const data = await res.json();
-    assert(typeof data.value === 'string', 'Setting has a value');
-    assert(data.key === 'franchise_link', 'Setting key is franchise_link');
-  });
-
   // ============================================
-  // DASHBOARD API TESTS (POST / PUT / DELETE)
+  // CRUD TESTS - dipakai Admin Dashboard saja
+  // Pola: buat data → cek → hapus (biar DB bersih)
   // ============================================
 
-  // --- Test 11: POST /api/products - tambah menu baru ---
+  // --- PRODUK (Katalog Menu) ---
+
+  // POST: tambah menu baru dari dashboard
   let testProductId = null;
   await test('POST /api/products - tambah menu baru', async () => {
     const res = await fetch(API_BASE + '/api/products', {
@@ -188,7 +213,7 @@ async function test(name, fn) {
     testProductId = data.id;
   });
 
-  // --- Test 12: Verify new product appears in /api/menus ---
+  // Cek produk baru muncul di daftar menu
   await test('Produk baru muncul di GET /api/menus', async () => {
     if (!testProductId) { console.log('  SKIP: no test product created'); return; }
     const res = await fetch(API_BASE + '/api/menus');
@@ -199,7 +224,7 @@ async function test(name, fn) {
     if (found) assert(found.name === 'Test Menu QA', 'Product name correct in menus listing');
   });
 
-  // --- Test 13: PUT /api/products/:id - edit menu ---
+  // PUT: edit menu dari dashboard (ubah nama, harga, kategori, gambar)
   await test('PUT /api/products/:id - edit menu', async () => {
     if (!testProductId) { console.log('  SKIP: no test product created'); return; }
     const res = await fetch(API_BASE + '/api/products/' + testProductId, {
@@ -214,7 +239,7 @@ async function test(name, fn) {
     assert(data.price === 50000, 'Product price updated');
   });
 
-  // --- Test 14: DELETE /api/products/:id - hapus menu ---
+  // DELETE: hapus menu dari dashboard, lalu cek udah ga ada di daftar
   await test('DELETE /api/products/:id - hapus menu test', async () => {
     if (!testProductId) { console.log('  SKIP: no test product created'); return; }
     const res = await fetch(API_BASE + '/api/products/' + testProductId, { method: 'DELETE' });
@@ -223,7 +248,6 @@ async function test(name, fn) {
     const data = await res.json();
     assert(typeof data.message === 'string', 'Response contains success message');
 
-    // Verify deleted
     const res2 = await fetch(API_BASE + '/api/menus');
     const menus = await res2.json();
     const allProducts = menus.flatMap(c => c.products);
@@ -232,7 +256,9 @@ async function test(name, fn) {
     testProductId = null;
   });
 
-  // --- Test 15: POST /api/outlets - tambah cabang ---
+  // --- OUTLET (Lokasi Cabang) ---
+
+  // POST: tambah cabang baru dari dashboard
   let testOutletId = null;
   await test('POST /api/outlets - tambah cabang baru', async () => {
     const resCities = await fetch(API_BASE + '/api/outlets');
@@ -253,7 +279,7 @@ async function test(name, fn) {
     testOutletId = data.id;
   });
 
-  // --- Test 16: DELETE /api/outlets/:id - hapus cabang ---
+  // DELETE: hapus cabang dari dashboard
   await test('DELETE /api/outlets/:id - hapus cabang test', async () => {
     if (!testOutletId) { console.log('  SKIP: no test outlet created'); return; }
     const res = await fetch(API_BASE + '/api/outlets/' + testOutletId, { method: 'DELETE' });
@@ -264,7 +290,9 @@ async function test(name, fn) {
     testOutletId = null;
   });
 
-  // --- Test 17: POST /api/gallery - tambah foto galeri ---
+  // --- GALERI (Foto Dokumentasi) ---
+
+  // POST: upload foto galeri baru dari dashboard
   let testGalleryId = null;
   await test('POST /api/gallery - tambah foto galeri', async () => {
     const res = await fetch(API_BASE + '/api/gallery', {
@@ -280,7 +308,7 @@ async function test(name, fn) {
     testGalleryId = data.id;
   });
 
-  // --- Test 18: DELETE /api/gallery/:id - hapus foto galeri ---
+  // DELETE: hapus foto galeri dari dashboard, lalu cek udah ga ada
   await test('DELETE /api/gallery/:id - hapus galeri test', async () => {
     if (!testGalleryId) { console.log('  SKIP: no test gallery created'); return; }
     const res = await fetch(API_BASE + '/api/gallery/' + testGalleryId, { method: 'DELETE' });
@@ -289,7 +317,6 @@ async function test(name, fn) {
     const data = await res.json();
     assert(typeof data.message === 'string', 'Response contains success message');
 
-    // Verify deleted
     const res2 = await fetch(API_BASE + '/api/gallery');
     const gallery = await res2.json();
     const found = gallery.find(g => g.id === testGalleryId);
@@ -297,7 +324,9 @@ async function test(name, fn) {
     testGalleryId = null;
   });
 
-  // --- Test 19: POST /api/hero-slides - tambah hero slide ---
+  // --- HERO SLIDES (Carousel Banner) ---
+
+  // POST: tambah slide hero baru dari dashboard
   let testSlideId = null;
   await test('POST /api/hero-slides - tambah hero slide', async () => {
     const res = await fetch(API_BASE + '/api/hero-slides', {
@@ -313,7 +342,7 @@ async function test(name, fn) {
     testSlideId = data.id;
   });
 
-  // --- Test 20: DELETE /api/hero-slides/:id - hapus hero slide ---
+  // DELETE: hapus slide hero dari dashboard, lalu cek udah ga ada
   await test('DELETE /api/hero-slides/:id - hapus hero slide test', async () => {
     if (!testSlideId) { console.log('  SKIP: no test slide created'); return; }
     const res = await fetch(API_BASE + '/api/hero-slides/' + testSlideId, { method: 'DELETE' });
@@ -322,7 +351,6 @@ async function test(name, fn) {
     const data = await res.json();
     assert(typeof data.message === 'string', 'Response contains success message');
 
-    // Verify deleted
     const res2 = await fetch(API_BASE + '/api/hero-slides');
     const slides = await res2.json();
     const found = slides.find(s => s.id === testSlideId);
@@ -330,10 +358,11 @@ async function test(name, fn) {
     testSlideId = null;
   });
 
-  // --- Test 21: POST /api/settings/franchise-link - update link ---
+  // --- FRANCHISE LINK (Settings) ---
+
+  // POST: update link franchise dari dashboard (simpan link WA baru)
   let originalLink = null;
   await test('POST /api/settings/franchise-link - update link', async () => {
-    // Save original
     const resGet = await fetch(API_BASE + '/api/settings/franchise-link');
     const origData = await resGet.json();
     originalLink = origData.value;
@@ -345,13 +374,12 @@ async function test(name, fn) {
     });
     assert(res.ok, 'Status is 200 OK (got ' + res.status + ')');
 
-    // Verify updated
     const res2 = await fetch(API_BASE + '/api/settings/franchise-link');
     const data = await res2.json();
     assert(data.value === 'https://wa.me/test-qa-123', 'Franchise link updated');
   });
 
-  // --- Test 22: Restore franchise link ---
+  // Restore: balikin link franchise ke nilai asli setelah test
   await test('Restore franchise link ke nilai asli', async () => {
     if (!originalLink) { console.log('  SKIP: original link not saved'); return; }
     const res = await fetch(API_BASE + '/api/settings/franchise-link', {
@@ -366,7 +394,7 @@ async function test(name, fn) {
     assert(data.value === originalLink, 'Franchise link restored to original');
   });
 
-  // --- Results ---
+  // --- HASIL ---
   console.log('\n=== Results ===');
   console.log('Passed: ' + passed);
   console.log('Failed: ' + failed);

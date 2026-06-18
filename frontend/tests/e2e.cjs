@@ -1,3 +1,22 @@
+/**
+ * E2E Test Suite - Landing Page (Frontend)
+ *
+ * Ngetest tampilan landing page dari sudut pandang visitor pakai browser (Playwright):
+ * - Page Load: judul halaman "Grand Kebab Hejo" muncul
+ * - Navbar: link Tentang, Menu, Franchise ada
+ * - Hero Section: heading "Franchise Kebab", tombol "Gabung Franchise" & "Jelajahi Menu"
+ * - Menu Section: produk dari API tampil (nama, harga Rp, filter kategori)
+ * - Gambar Produk: foto produk muncul di kartu menu
+ * - Galeri: section galeri dengan heading ada
+ * - Footer: elemen footer dengan teks brand/copyright
+ * - WhatsApp Button: floating button/link WA ada
+ * - Mobile Responsive: konten hero terlihat di viewport mobile (375px)
+ * - No JS Errors: ga ada error JavaScript critical
+ *
+ * Jalankan: npm test (dari folder frontend)
+ * Total: 21 test
+ */
+
 const { chromium } = require('playwright');
 
 const BASE_URL = 'https://frontend-phi-blond-37.vercel.app';

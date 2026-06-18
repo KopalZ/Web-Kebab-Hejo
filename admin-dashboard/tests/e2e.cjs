@@ -1,3 +1,19 @@
+/**
+ * E2E Test Suite - Admin Dashboard
+ *
+ * Ngetest dari sudut pandang user pakai browser (Playwright):
+ * - Login page: halaman login muncul, input fields ada
+ * - Login sukses: credential benar → redirect ke dashboard
+ * - Login gagal: credential salah → tetap di login + pesan error
+ * - Katalog Menu: nama produk, harga (Rp), muncul dari API
+ * - Tombol Hapus: ada di setiap kartu menu, terhubung ke DELETE API
+ * - Filter Kategori: chip "Semua", "Kebab Pot" berfungsi filter produk
+ * - Sidebar Navigasi: link-link navigasi ada
+ *
+ * Jalankan: npm run test:e2e (dari folder admin-dashboard)
+ * Total: 18 test
+ */
+
 const { chromium } = require('playwright');
 
 const BASE_URL = 'https://admin-dashboard-alpha-sage-15.vercel.app';
