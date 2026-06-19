@@ -547,3 +547,66 @@ select {
   font-size: 14px;
   cursor: pointer;
 }
+
+.edit-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 2px solid var(--color-black);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  margin-bottom: 6px;
+  box-sizing: border-box;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--color-white);
+  border: 2px solid var(--color-black);
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 0 var(--color-black);
+}
+
+.modal label {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.modal__actions button {
+  flex: 1;
+  padding: 10px 16px;
+  border: 2px solid var(--color-black);
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal__actions .btn-primary {
+  background: var(--color-yellow);
+  box-shadow: 0 3px 0 var(--color-black);
+}
+
+.modal__actions .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
