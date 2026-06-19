@@ -1,4 +1,24 @@
 <script setup>
+/**
+ * LoginView.vue - Halaman Login Admin Dashboard
+ *
+ * Halaman pertama yang muncul kalau admin belum login.
+ * Admin isi username & password, lalu sistem cek ke backend.
+ *
+ * KONEKSI KE BACKEND:
+ *   Endpoint: POST /api/login
+ *   File API: src/api.js (variabel API_BASE)
+ *   Body: { username: "admin", password: "password123" }
+ *   Sukses: { message: "Login sukses", token: "..." } → simpan token → redirect ke /dashboard
+ *   Gagal:  status 401 → tampilkan pesan error
+ *
+ * CARA KERJA:
+ *   1. onMounted() → hapus token lama dari localStorage/sessionStorage
+ *   2. Admin isi form username & password
+ *   3. Klik "Masuk" → kirim POST /api/login ke backend
+ *   4. Kalau sukses → simpan token di localStorage → redirect ke halaman dashboard
+ *   5. Kalau gagal → tampilkan pesan error di form
+ */
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import untitledBg from '@/assets/Untitled13_20260525215101.png'
@@ -98,8 +118,7 @@ async function handleLogin() {
 </template>
 
 <style module>
-@import url('https://fonts.googleapis.com/css2?family=FONTSPRING+DEMO+-+Biennale+Bold:wght@400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
 
 .loginPage {
   width: 100%;
@@ -118,7 +137,7 @@ async function handleLogin() {
   text-align: center;
   font-size: 16px;
   color: #000;
-  font-family: 'FONTSPRING DEMO - Biennale Bold', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .untitled13202605252151012Icon {
@@ -235,7 +254,7 @@ async function handleLogin() {
   text-align: center;
   font-size: 20px;
   color: #1e1e1e;
-  font-family: 'FONTSPRING DEMO - Biennale Bold', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .errorText {

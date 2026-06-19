@@ -1,4 +1,12 @@
 <script setup>
+/**
+ * USPSection.vue - Section Keunggulan (Unique Selling Points)
+ *
+ * Section yang nampilin keunggulan/karakteristik brand Grand Kebab Hejo
+ * dalam bentuk kartu-kartu (bahan premium, harga terjangkau, dll).
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (data statis/hardcoded)
+ */
 import {
   UtensilsCrossed,
   BadgeDollarSign,

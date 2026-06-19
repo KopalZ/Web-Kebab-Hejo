@@ -1,4 +1,17 @@
 <script setup>
+/**
+ * AboutSection.vue - Section Tentang Kami
+ *
+ * Section yang ngenalin brand Grand Kebab Hejo ke visitor.
+ * Berisi cerita singkat tentang brand dan 3 keunggulan utama (USP).
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (semua data statis/hardcoded)
+ *
+ * FITUR:
+ *   - Gambar gerobak kebab di sebelah kanan
+ *   - 3 kartu keunggulan: Menu Variatif, Harga Terjangkau, Support Penuh
+ *   - Animasi scroll reveal (fade-up, fade-left)
+ */
 import { UtensilsCrossed, Store, BadgeDollarSign } from 'lucide-vue-next'
 import ScrollReveal from './ScrollReveal.vue'
 import gerobakImg from '@/assets/gerobak.png'

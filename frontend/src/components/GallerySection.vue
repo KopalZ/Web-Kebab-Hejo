@@ -1,4 +1,21 @@
 <script setup>
+/**
+ * GallerySection.vue - Section Galeri Foto
+ *
+ * Section ini nampilin grid foto dokumentasi Grand Kebab Hejo.
+ *
+ * KONEKSI KE BACKEND:
+ *   BELUM TERHUBUNG ke API. Saat ini foto masih hardcoded di array galleryImages.
+ *   Seharusnya bisa pakai: GET /api/gallery
+ *   Cara panggil: fetch(API_BASE + '/api/gallery')
+ *   Response: [{ id, image_url, note }, ...]
+ *
+ * CARA KERJA:
+ *   - Array galleryImages berisi 10 foto hardcoded
+ *   - Ditampilkan sebagai grid 2 kolom (mobile) / 5 kolom (desktop)
+ *   - Hover → zoom gambar + overlay hijau dengan judul foto
+ *   - Animasi scroll reveal (fade-up) bertahap
+ */
 import ScrollReveal from './ScrollReveal.vue'
 
 // Kita tambahkan properti 'image' yang mengarah ke file di folder public

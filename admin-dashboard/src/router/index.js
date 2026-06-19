@@ -19,12 +19,6 @@ const routes = [
         meta: { title: 'Hero Page' }
       },
       {
-        path: 'tentang',
-        name: 'tentang',
-        component: () => import('@/views/TentangView.vue'),
-        meta: { title: 'Tentang' }
-      },
-      {
         path: 'menu',
         name: 'menu',
         component: () => import('@/views/MenuView.vue'),

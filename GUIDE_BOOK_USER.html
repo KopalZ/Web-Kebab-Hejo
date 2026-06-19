@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Guide Book User — Grand Kebab Hejo</title>
+  <style>
+    @page { margin: 20mm 18mm; size: A4; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: #fff;
+    }
+    .cover {
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; min-height: 90vh; text-align: center;
+      padding: 60px 20px;
+    }
+    .cover h1 { font-size: 42px; font-weight: 900; color: #02a554; margin-bottom: 8px; }
+    .cover h2 { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 8px; }
+    .cover .badge {
+      display: inline-block; background: #ffd339; color: #000;
+      font-weight: 800; padding: 8px 24px; border-radius: 6px;
+      border: 2px solid #000; font-size: 14px; margin-bottom: 30px;
+    }
+    .cover .info-box {
+      background: #f7f7f7; border: 1px solid #ddd; border-radius: 10px;
+      padding: 24px 32px; text-align: left; max-width: 500px; width: 100%;
+    }
+    .cover .info-box p { margin-bottom: 6px; font-size: 14px; }
+    .cover .info-box strong { color: #02a554; }
+    .toc { page-break-after: always; padding: 40px 0; }
+    .toc h2 {
+      font-size: 26px; margin-bottom: 24px; color: #02a554;
+      border-bottom: 3px solid #ffd339; padding-bottom: 8px;
+    }
+    .toc ul { list-style: none; }
+    .toc li { padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 15px; }
+    .section { page-break-before: always; padding: 40px 0; }
+    .section:first-of-type { page-break-before: auto; }
+    h2.section-title {
+      font-size: 28px; color: #02a554;
+      border-bottom: 3px solid #ffd339; padding-bottom: 8px; margin-bottom: 24px;
+    }
+    h3 { font-size: 20px; color: #1a1a1a; margin: 28px 0 12px; padding-left: 12px; border-left: 4px solid #02a554; }
+    h4 { font-size: 16px; color: #555; margin: 20px 0 8px; }
+    p { margin-bottom: 12px; font-size: 14px; }
+    ul, ol { margin: 0 0 16px 24px; font-size: 14px; }
+    li { margin-bottom: 6px; }
+    pre {
+      background: #1e1e2e; color: #cdd6f4; padding: 14px 18px;
+      border-radius: 8px; font-size: 13px; line-height: 1.6; margin: 12px 0 20px;
+    }
+    code {
+      font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 13px;
+    }
+    p code, li code { background: #f0f0f0; color: #c7254e; padding: 2px 6px; border-radius: 4px; }
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px;
+    }
+    th { background: #02a554; color: #fff; padding: 10px 14px; text-align: left; font-weight: 700; }
+    td { padding: 10px 14px; border-bottom: 1px solid #e0e0e0; }
+    tr:nth-child(even) td { background: #f9f9f9; }
+    .note {
+      background: #fff8e1; border-left: 4px solid #ffd339;
+      padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 13px;
+    }
+    .success { background: #e8f5e9; border-left: 4px solid #02a554; }
+    .footer { text-align: center; padding: 40px 0; color: #999; font-size: 12px; border-top: 1px solid #eee; margin-top: 40px; }
+    @media print {
+      body { max-width: 100%; }
+      .section { page-break-before: always; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="badge">GUIDE BOOK USER</div>
+  <h1>Grand Kebab Hejo</h1>
+  <h2>Panduan Website Landing Page</h2>
+  <p style="color: #666; margin-bottom: 40px;">Untuk pengunjung website</p>
+  <div class="info-box">
+    <p><strong>URL Website:</strong> frontend-phi-blond-37.vercel.app</p>
+    <p><strong>Grand Kebab Hejo</strong></p>
+    <p>Menu Beragam · Outlet Menarik · Harga Terjangkau</p>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>Daftar Isi</h2>
+  <ul>
+    <li><strong>1.</strong> Cara Mengakses Website</li>
+    <li><strong>2.</strong> Navigasi Halaman</li>
+    <li><strong>3.</strong> Hero Section — Banner Utama</li>
+    <li><strong>4.</strong> About — Tentang Kami</li>
+    <li><strong>5.</strong> Menu — Lihat &amp; Filter Produk</li>
+    <li><strong>6.</strong> Franchise — Info &amp; Kalkulator</li>
+    <li><strong>7.</strong> Coverage — Cari Cabang Terdekat</li>
+    <li><strong>8.</strong> Galeri — Foto Dokumentasi</li>
+    <li><strong>9.</strong> WhatsApp — Hubungi Kami</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 class="section-title">1. Cara Mengakses Website</h2>
+
+  <div class="note">
+    <strong>URL Website:</strong> <code>https://frontend-phi-blond-37.vercel.app</code>
+  </div>
+
+  <p>Buka URL di atas di browser HP atau laptop. Tidak perlu install aplikasi apapun. Website bisa dibuka di:</p>
+  <ul>
+    <li><strong>HP/Tablet</strong> — Chrome, Safari, Opera, dll</li>
+    <li><strong>Laptop/PC</strong> — Chrome, Firefox, Edge, dll</li>
+  </ul>
+
+  <div class="success">
+    <strong>Tips:</strong> Simpan URL ini di bookmark HP kamu agar mudah diakses lagi.
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">2. Navigasi Halaman</h2>
+
+  <p>Website Grand Kebab Hejo adalah <strong>satu halaman penuh</strong> (single page).</p>
+  <p>Gunakan menu <strong>Navbar</strong> di bagian atas untuk loncat ke bagian tertentu:</p>
+
+  <table>
+    <tr><th>Menu Navbar</th><th>Tujuan</th></tr>
+    <tr><td>Tentang Kami</td><td>Scroll ke info tentang Grand Kebab Hejo</td></tr>
+    <tr><td>Menu</td><td>Scroll ke daftar menu &amp; harga</td></tr>
+    <tr><td>Franchise</td><td>Scroll ke info franchise &amp; kalkulator profit</td></tr>
+    <tr><td>Jangkauan</td><td>Scroll ke peta &amp; daftar cabang</td></tr>
+    <tr><td><strong>Gabung Franchise</strong></td><td>Tombol hijau — langsung buka WhatsApp</td></tr>
+  </table>
+
+  <p>Atau tinggal <strong>scroll</strong> halaman ke bawah untuk lihat semua konten secara urut.</p>
+</div>
+
+<div class="section">
+  <h2 class="section-title">3. Hero Section — Banner Utama</h2>
+
+  <p>Bagian paling atas website. Menampilkan:</p>
+  <ul>
+    <li><strong>Ilustrasi gerobak</strong> Grand Kebab Hejo</li>
+    <li><strong>Slide banner</strong> promosi yang berganti otomatis setiap 3 detik</li>
+    <li>Tombol <strong>"Gabung Franchise"</strong> → langsung chat WhatsApp</li>
+    <li>Tombol <strong>"Jelajahi Menu"</strong> → scroll ke daftar menu</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 class="section-title">4. About — Tentang Kami</h2>
+
+  <p>Bagian ini menceritakan tentang Grand Kebab Hejo. Ada 3 keunggulan utama:</p>
+  <ul>
+    <li><strong>Menu Beragam</strong> — Banyak pilihan menu enak</li>
+    <li><strong>Outlet Menarik</strong> — Banyak cabang tersebar</li>
+    <li><strong>Harga Terjangkau</strong> — Mulai dari Rp10.000</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 class="section-title">5. Menu — Lihat &amp; Filter Produk</h2>
+
+  <p>Bagian ini menampilkan semua menu Grand Kebab Hejo.</p>
+
+  <h3>Cara Melihat Menu:</h3>
+  <ol>
+    <li>Semua produk tampil dalam bentuk <strong>kartu</strong> (gambar + nama + harga)</li>
+    <li>Gunakan tombol <strong>filter kategori</strong> di atas untuk menyaring:
+      <ul>
+        <li>Kebab Pot</li>
+        <li>Kebab</li>
+        <li>Burger</li>
+        <li>HotDog</li>
+        <li>Pizza</li>
+        <li>Canai</li>
+      </ul>
+    </li>
+    <li>Klik <strong>"Semua"</strong> untuk lihat semua produk</li>
+    <li>Tiap kartu menampilkan: gambar menu, nama, dan harga (format Rp)</li>
+  </ol>
+
+  <div class="success">
+    <strong>Info Harga:</strong> Harga mulai dari Rp10.000 sampai Rp26.000.
+    Harga sudah dalam format Rupiah Indonesia (Rp).
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">6. Franchise — Info &amp; Kalkulator</h2>
+
+  <p>Tertarik jadi mitra franchise? Di bagian ini ada:</p>
+
+  <h3>4 Langkah Join Franchise:</h3>
+  <ol>
+    <li>Isi data diri</li>
+    <li>Konsultasi</li>
+    <li>Survey lokasi</li>
+    <li>Mulai bisnis</li>
+  </ol>
+
+  <h3>Kalkulator Profit (Estimasi)</h3>
+  <p>Ada slider yang bisa kamu geser untuk melihat estimasi keuntungan:</p>
+  <ul>
+    <li>Geser slider <strong>estimasi porsi terjual per hari</strong></li>
+    <li>Lihat perkiraan <strong>pendapatan per bulan</strong></li>
+    <li>Lihat perkiraan <strong>keuntungan bersih per bulan</strong></li>
+  </ul>
+
+  <p>Klik tombol <strong>"Gabung Franchise"</strong> untuk langsung chat via WhatsApp.</p>
+</div>
+
+<div class="section">
+  <h2 class="section-title">7. Coverage — Cari Cabang Terdekat</h2>
+
+  <p>Cari outlet Grand Kebab Hejo terdekat dari lokasi kamu.</p>
+
+  <h3>Cara Penggunaan:</h3>
+  <ol>
+    <li>Lihat deretan tombol <strong>nama kota</strong> (Cikarang, Bekasi, Bogor, dll)</li>
+    <li>Klik nama kota → tampil daftar cabang di kota tersebut</li>
+    <li>Peta Google Maps akan menyesuaikan lokasi kota yang dipilih</li>
+    <li>Klik <strong>"Cari di Google Maps"</strong> pada cabang tertentu → buka rute di Google Maps</li>
+  </ol>
+
+  <h3>Kota yang Tersedia:</h3>
+  <p>Cikarang, Bekasi, Bogor, Tangerang, Karawang, Cikampek, Purwakarta, Bandung, Subang, Majalengka</p>
+  <p>Total ada puluhan cabang yang tersebar di 10 kota.</p>
+</div>
+
+<div class="section">
+  <h2 class="section-title">8. Galeri — Foto Dokumentasi</h2>
+
+  <p>Lihat foto-foto Grand Kebab Hejo dalam tampilan grid. Menampilkan:</p>
+  <ul>
+    <li>Foto menu &amp; produk</li>
+    <li>Suasana outlet</li>
+    <li>Dokumentasi kegiatan</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 class="section-title">9. WhatsApp — Hubungi Kami</h2>
+
+  <p>Ada <strong>tombol WhatsApp</strong> hijau yang melayang di pojok kanan bawah halaman. Tombol ini:</p>
+  <ul>
+    <li>Terlihat di <strong>semua bagian</strong> halaman (tetap di tempat)</li>
+    <li>Bergerak (animasi pulse) biar mudah dilihat</li>
+    <li>Klik → langsung buka chat WhatsApp di HP atau web</li>
+  </ul>
+
+  <div class="success">
+    <strong>Mau pesan? Tanya harga? Info franchise?</strong>
+    Tinggal klik tombol WA hijau di pojok kanan bawah!
+  </div>
+</div>
+
+<div class="footer">
+  <p><strong>Grand Kebab Hejo</strong> — Guide Book User</p>
+  <p>Menu Beragam · Outlet Menarik · Harga Terjangkau</p>
+</div>
+
+</body>
+</html>

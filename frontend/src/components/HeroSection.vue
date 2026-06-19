@@ -1,4 +1,26 @@
 <script setup>
+/**
+ * HeroSection.vue - Section Banner Utama (Hero)
+ *
+ * Section pertama yang dilihat visitor saat buka landing page.
+ * Berisi heading utama, tombol CTA, dan carousel gambar yang auto-slide.
+ *
+ * KONEKSI KE BACKEND:
+ *   1. GET /api/hero-slides → ambil gambar carousel dari database
+ *      Cara panggil: fetch(API_BASE + '/api/hero-slides')
+ *      Response: [{ id, image_url, note }, ...]
+ *
+ *   2. GET /api/settings/franchise-link → ambil link WA buat tombol "Gabung Franchise"
+ *      Cara panggil: fetch(API_BASE + '/api/settings/franchise-link')
+ *      Response: { key: "franchise_link", value: "https://wa.me/..." }
+ *
+ * CARA KERJA:
+ *   1. onMounted() → panggil 2 API sekaligus (hero slides + franchise link)
+ *   2. Carousel auto-slide setiap 3 detik
+ *   3. Tombol kiri/kanan buat geser slide manual
+ *   4. Tombol "Gabung Franchise" → link ke WA (dari database)
+ *   5. Tombol "Jelajahi Menu" → scroll ke section #menu
+ */
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { ShieldCheck, MapPin } from 'lucide-vue-next'
 import Button from './ui/Button.vue'

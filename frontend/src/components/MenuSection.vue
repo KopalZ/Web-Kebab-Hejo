@@ -1,4 +1,35 @@
 <script setup>
+/**
+ * MenuSection.vue - Section Daftar Menu
+ *
+ * Section ini nampilin semua produk menu Grand Kebab Hejo ke visitor.
+ * Data diambil dari backend API saat halaman dibuka.
+ *
+ * KONEKSI KE BACKEND:
+ *   Endpoint: GET /api/menus
+ *   File API: src/api.js (variabel API_BASE)
+ *   Cara panggil: fetch(API_BASE + '/api/menus')
+ *
+ * DATA YANG DITERIMA DARI BACKEND:
+ *   [
+ *     { id: 1, name: "Kebab Pot", products: [
+ *         { id: 1, name: "Kebab Pot", price: 20000, image_url: "kebab-pot.png", categoryId: 1 }
+ *     ]},
+ *     ...
+ *   ]
+ *
+ * CARA KERJA:
+ *   1. onMounted() → panggil GET /api/menus ke backend
+ *   2. Olah data: pisah kategori & produk, format harga jadi "Rp 20.000"
+ *   3. Tampilkan kartu produk dengan gambar, nama, kategori, harga
+ *   4. Tombol filter kategori → klik "Kebab Pot" → hanya tampil produk kategori itu
+ *
+ * FITUR:
+ *   - Filter kategori (Semua, Kebab Pot, Kebab, Burger, dll)
+ *   - Kartu produk dengan hover animation
+ *   - Tombol "Buat Pesanan" → link ke WhatsApp
+ */
+
 // 1. Import cukup satu kali saja di paling atas
 import { ref, computed, onMounted } from 'vue'
 import ScrollReveal from './ScrollReveal.vue'

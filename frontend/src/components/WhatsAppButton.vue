@@ -1,4 +1,16 @@
 <script setup>
+/**
+ * WhatsAppButton.vue - Tombol WhatsApp Floating
+ *
+ * Tombol melayang di pojok kanan bawah buat visitor yang mau hubungi via WA.
+ * Muncul setelah delay sebentar dengan animasi fade-in.
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (link WA hardcoded)
+ *
+ * CARA KERJA:
+ *   - setTimeout 1.5 detik → tombol muncul (showButton = true)
+ *   - Klik → buka WhatsApp dengan pesan otomatis
+ */
 import { ref, onMounted } from 'vue'
 import { MessageCircle } from 'lucide-vue-next'
 

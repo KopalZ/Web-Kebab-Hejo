@@ -1,9 +1,58 @@
+<!--
+  ==================================================================
+  DashboardLayout.vue — Layout Utama (Wrapper) Seluruh Halaman Admin
+  ==================================================================
+
+  FUNGSI HALAMAN INI:
+  Sebagai "bungkus" (layout) yang menampilkan:
+  1. Header atas — Logo Kebab Hejo + judul + tombol Keluar
+  2. Sidebar kiri — Menu navigasi ke setiap modul dashboard
+  3. Area konten kanan — Menampilkan halaman yang sedang aktif (<RouterView>)
+
+  SEMUA HALAMAN ADMIN menggunakan layout ini sebagai wrapper,
+  kecuali halaman Login (LoginView.vue punya layout sendiri).
+
+  STRUKTUR TAMPILAN:
+  ┌──────────────────────────────────────────────────────────┐
+  │  HEADER: Logo + Judul + Tombol Keluar                    │
+  ├────────────┬─────────────────────────────────────────────┤
+  │            │                                             │
+  │  SIDEBAR   │   KONTEN HALAMAN                            │
+  │  - Dashboard│   (berubah-ubah tergantung menu yang       │
+  │  - Hero     │    dipilih di sidebar)                     │
+  │  - Tentang  │                                             │
+  │  - Menu     │   Diisi oleh <RouterView /> yang           │
+  │  - Jangkauan│   me-render view sesuai route aktif       │
+  │  - Galeri   │                                             │
+  │            │                                             │
+  └────────────┴─────────────────────────────────────────────┘
+
+  NAVIGASI SIDEBAR (Route yang tersedia):
+  ┌────────────────┬──────────┬──────────────────────────────┐
+  │ Label          │ Route    │ View yang di-render          │
+  ├────────────────┼──────────┼──────────────────────────────┤
+  │ Dashboard      │ /        │ HomeView.vue                 │
+  │ Hero Page      │ /hero    │ HeroView.vue                 │
+  │ Tentang        │ /tentang │ TentangView.vue              │
+  │ Katalog Menu   │ /menu    │ MenuView.vue                 │
+  │ Jangkauan      │ /lokasi  │ LokasiView.vue               │
+  │ Galeri         │ /galeri  │ GaleriView.vue               │
+  └────────────────┴──────────┴──────────────────────────────┘
+
+  FITUR LOGOUT:
+  - Klik tombol "Keluar" → muncul konfirmasi
+  - Jika admin konfirmasi, token dihapus dari localStorage & sessionStorage
+  - Admin diarahkan kembali ke halaman /login
+
+  TIDAK ADA KONEKSI LANGSUNG KE BACKEND:
+  Layout ini tidak melakukan fetch data ke API.
+  Yang melakukan fetch adalah masing-masing View di dalam <RouterView>.
+-->
 <script setup>
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import {
   LayoutDashboard,
   Image,
-  Info,
   UtensilsCrossed,
   MapPin,
   Images,
@@ -13,10 +62,11 @@ import logoImg from '@/assets/logo.jpeg'
 
 const router = useRouter()
 
+// Daftar menu navigasi yang tampil di sidebar
+// Setiap item punya: route tujuan, nama route, label tampil, icon, dan flag exact
 const navItems = [
   { to: '/', name: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { to: '/hero', name: 'hero', label: 'Hero Page', icon: Image },
-  { to: '/tentang', name: 'tentang', label: 'Tentang', icon: Info },
   { to: '/menu', name: 'menu', label: 'Katalog Menu', icon: UtensilsCrossed },
   { to: '/lokasi', name: 'lokasi', label: 'Jangkauan', icon: MapPin },
   { to: '/galeri', name: 'galeri', label: 'Galeri', icon: Images }

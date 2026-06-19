@@ -1,19 +1,43 @@
+<!--
+  ================================================================
+  HomeView.vue — Halaman Utama (Beranda) Dashboard Admin
+  ================================================================
+
+  FUNGSI HALAMAN INI:
+  Menampilkan kartu navigasi ke setiap modul dashboard admin.
+  Ini adalah halaman pertama yang muncul setelah admin login berhasil.
+
+  KARTU MODUL YANG DITAMPILKAN:
+  ┌──────────────────────────────────────────────────────────────┐
+  │ Modul          │ Route   │ Fungsi                            │
+  ├──────────────────────────────────────────────────────────────┤
+  │ Hero Page      │ /hero   │ Kelola banner slide & link WA     │
+  │ Tentang        │ /tentang│ Kelola halaman tentang kami       │
+  │ Katalog Menu   │ /menu   │ Kelola produk menu (tambah/hapus) │
+  │ Jangkauan      │ /lokasi │ Kelola kota dan outlet            │
+  │ Galeri         │ /galeri │ Kelola foto galeri                │
+  └──────────────────────────────────────────────────────────────┘
+
+  TIDAK ADA KONEKSI KE BACKEND:
+  Halaman ini murni navigasi, tidak melakukan fetch data ke API.
+  Setiap kartu menggunakan <RouterLink> untuk pindah halaman
+  tanpa reload (SPA - Single Page Application).
+
+  ICON menggunakan library lucide-vue-next:
+  - Image, Info, UtensilsCrossed, MapPin, Images
+-->
 <script setup>
 import { RouterLink } from 'vue-router'
-import { Image, Info, UtensilsCrossed, MapPin, Images } from 'lucide-vue-next'
+import { Image, UtensilsCrossed, MapPin, Images } from 'lucide-vue-next'
 
+// Daftar kartu navigasi modul dashboard
+// Setiap item punya: route tujuan, judul, deskripsi, dan icon
 const sections = [
   {
     to: '/hero',
     title: 'Hero Page',
     desc: 'Kelola banner slide & link franchise',
     icon: Image
-  },
-  {
-    to: '/tentang',
-    title: 'Tentang',
-    desc: 'Ubah media halaman tentang kami',
-    icon: Info
   },
   {
     to: '/menu',

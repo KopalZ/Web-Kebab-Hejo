@@ -1,4 +1,22 @@
 <script setup>
+/**
+ * FranchiseSection.vue - Section Info Franchise
+ *
+ * Section ini nampilin informasi franchise Grand Kebab Hejo:
+ * - Langkah-langkah cara bergabung (4 step)
+ * - Isi paket franchise (gerobak, peralatan, bahan baku)
+ * - Simulasi keuntungan interaktif (slider penjualan & harga)
+ *
+ * KONEKSI KE BACKEND:
+ *   TIDAK ADA. Semua data di section ini statis/hardcoded.
+ *   Tombol "Mulai Bisnis Kebab Anda" langsung link ke WhatsApp (hardcoded).
+ *
+ * FITUR:
+ *   - 4 kartu step cara bergabung (Konsultasi → Kesepakatan → Persiapan → Grand Opening)
+ *   - Daftar isi paket franchise (9 item)
+ *   - Kalkulator simulasi: slider penjualan/hari & harga rata-rata → hitung omset & profit
+ *   - Rumus profit: omset bulanan × 33.7%
+ */
 import { ref, computed } from 'vue'
 import { MessageCircle, FileCheck, Wrench, Rocket, Package, TrendingUp, CheckCircle2 } from 'lucide-vue-next'
 import Button from './ui/Button.vue'

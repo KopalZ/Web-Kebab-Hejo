@@ -1,4 +1,18 @@
 <script setup>
+/**
+ * Navbar.vue - Navigasi Atas (Navigation Bar)
+ *
+ * Navbar yang muncul di paling atas halaman. Berisi logo dan link navigasi
+ * yang scroll ke masing-masing section (#about, #menu, #franchise, #coverage).
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (semua data statis)
+ *
+ * FITUR:
+ *   - Scroll detection: navbar berubah style saat user scroll ke bawah
+ *   - Active section: link yang sesuai section saat ini di-highlight
+ *   - Mobile menu: hamburger icon → buka/tutup menu di layar HP
+ *   - Anchor links: klik "Menu" → scroll otomatis ke section #menu
+ */
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Menu, X, Sparkles } from 'lucide-vue-next'
 import Button from './ui/Button.vue'

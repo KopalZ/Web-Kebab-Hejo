@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Panduan Deploy — Grand Kebab Hejo</title>
+  <style>
+    @page { margin: 20mm 18mm; size: A4; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Plus Jakarta Sans', system-ui, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.7;
+      padding: 0;
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    /* --- COVER --- */
+    .cover {
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .cover h1 {
+      font-size: 36px;
+      font-weight: 900;
+      color: #02a554;
+      margin-bottom: 12px;
+    }
+    .cover h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 40px;
+    }
+    .cover .badge {
+      display: inline-block;
+      background: #ffd339;
+      color: #000;
+      font-weight: 800;
+      padding: 8px 24px;
+      border-radius: 6px;
+      border: 2px solid #000;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+    .cover .info-box {
+      background: #f7f7f7;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 24px 32px;
+      text-align: left;
+      max-width: 500px;
+      width: 100%;
+    }
+    .cover .info-box p { margin-bottom: 6px; font-size: 14px; }
+    .cover .info-box strong { color: #02a554; }
+
+    /* --- DAFTAR ISI --- */
+    .toc {
+      page-break-after: always;
+      padding: 40px 20px;
+    }
+    .toc h2 {
+      font-size: 26px;
+      margin-bottom: 24px;
+      color: #02a554;
+      border-bottom: 3px solid #ffd339;
+      padding-bottom: 8px;
+    }
+    .toc ul { list-style: none; }
+    .toc li {
+      padding: 8px 0;
+      border-bottom: 1px dotted #ccc;
+      font-size: 15px;
+    }
+    .toc li strong { color: #02a554; }
+
+    /* --- SECTION --- */
+    .section {
+      page-break-before: always;
+      padding: 40px 20px;
+    }
+    .section:first-of-type { page-break-before: auto; }
+
+    h2.section-title {
+      font-size: 26px;
+      color: #02a554;
+      border-bottom: 3px solid #ffd339;
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+    h3 {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin: 28px 0 12px;
+      padding-left: 12px;
+      border-left: 4px solid #02a554;
+    }
+    h4 {
+      font-size: 15px;
+      color: #555;
+      margin: 16px 0 8px;
+    }
+
+    p { margin-bottom: 12px; font-size: 14px; }
+    ul, ol { margin: 0 0 16px 24px; font-size: 14px; }
+    li { margin-bottom: 6px; }
+
+    /* --- CODE BLOCK --- */
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 16px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 12px 0 20px;
+      border: 1px solid #313244;
+    }
+    code {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+    }
+    p code, li code {
+      background: #f0f0f0;
+      color: #c7254e;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    /* --- TABEL --- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+      font-size: 13px;
+    }
+    th {
+      background: #02a554;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    tr:nth-child(even) td { background: #f9f9f9; }
+
+    /* --- CATATAN / WARNING --- */
+    .note {
+      background: #fff8e1;
+      border-left: 4px solid #ffd339;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .note strong { color: #e65100; }
+    .danger {
+      background: #ffebee;
+      border-left: 4px solid #c62828;
+    }
+    .danger strong { color: #c62828; }
+    .success {
+      background: #e8f5e9;
+      border-left: 4px solid #02a554;
+    }
+    .success strong { color: #02a554; }
+
+    /* --- ARSITEKTUR DIAGRAM --- */
+    .arch-diagram {
+      background: #f7f7f7;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 16px 0 24px;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.8;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+      font-size: 12px;
+      border-top: 1px solid #eee;
+      margin-top: 40px;
+    }
+
+    /* Print-specific */
+    @media print {
+      body { max-width: 100%; }
+      .section { page-break-before: always; }
+      pre { white-space: pre-wrap; word-wrap: break-word; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<div class="cover">
+  <div class="badge">PANDUAN LENGKAP</div>
+  <h1>Grand Kebab Hejo</h1>
+  <h2>Panduan Deploy ke Railway & Vercel</h2>
+  <div class="info-box">
+    <p><strong>Proyek:</strong> Grand Kebab Hejo — Website Landing Page + Admin Dashboard</p>
+    <p><strong>Repository:</strong> github.com/KopalZ/Web-Kebab-Hejo</p>
+    <p><strong>Tanggal:</strong> 18 Juni 2026</p>
+    <p><strong>Tech Stack:</strong></p>
+    <p style="padding-left: 16px;">Backend: Express.js + Prisma + PostgreSQL</p>
+    <p style="padding-left: 16px;">Frontend: Vue 3 + Vite + TailwindCSS</p>
+    <p style="padding-left: 16px;">Admin: Vue 3 + Vite + Custom CSS</p>
+    <p><strong>Hosting:</strong></p>
+    <p style="padding-left: 16px;">Backend → Railway</p>
+    <p style="padding-left: 16px;">Frontend + Admin → Vercel</p>
+  </div>
+</div>
+
+<!-- ===================== DAFTAR ISI ===================== -->
+<div class="toc">
+  <h2>Daftar Isi</h2>
+  <ul>
+    <li><strong>Bagian 1</strong> — Arsitektur Proyek</li>
+    <li><strong>Bagian 2</strong> — Persiapan Awal (Prasyarat)</li>
+    <li><strong>Bagian 3</strong> — Deploy Backend ke Railway</li>
+    <li style="padding-left: 24px;">3.1 Install Railway CLI</li>
+    <li style="padding-left: 24px;">3.2 Login ke Railway</li>
+    <li style="padding-left: 24px;">3.3 Buat Project & Service</li>
+    <li style="padding-left: 24px;">3.4 Tambah Database PostgreSQL</li>
+    <li style="padding-left: 24px;">3.5 Set Environment Variables</li>
+    <li style="padding-left: 24px;">3.6 Deploy Backend</li>
+    <li style="padding-left: 24px;">3.7 Jalankan Migrasi Database</li>
+    <li style="padding-left: 24px;">3.8 Seed Data Awal (Admin Login)</li>
+    <li><strong>Bagian 4</strong> — Deploy Frontend (Landing Page) ke Vercel</li>
+    <li style="padding-left: 24px;">4.1 Install Vercel CLI</li>
+    <li style="padding-left: 24px;">4.2 Login ke Vercel</li>
+    <li style="padding-left: 24px;">4.3 Deploy Landing Page</li>
+    <li style="padding-left: 24px;">4.4 Set Environment Variable</li>
+    <li><strong>Bagian 5</strong> — Deploy Admin Dashboard ke Vercel</li>
+    <li><strong>Bagian 6</strong> — Update Kode Setelah Perubahan</li>
+    <li><strong>Bagian 7</strong> — Troubleshooting & FAQ</li>
+    <li><strong>Bagian 8</strong> — Ringkasan URL & Perintah Penting</li>
+  </ul>
+</div>
+
+<!-- ===================== BAGIAN 1: ARSITEKTUR ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 1 — Arsitektur Proyek</h2>
+
+  <p>Proyek ini terdiri dari <strong>3 bagian terpisah</strong> yang saling berkomunikasi melalui API:</p>
+
+  <div class="arch-diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                        PENGUNJUNG WEBSITE                        │
+└───────────────────────────────┬─────────────────────────────────┘
+                                │
+                    ┌───────────┴───────────┐
+                    │                       │
+          ┌─────────▼─────────┐   ┌────────▼─────────┐
+          │  LANDING PAGE     │   │  ADMIN DASHBOARD  │
+          │  (Vercel)         │   │  (Vercel)         │
+          │                   │   │                    │
+          │  - Hero Section   │   │  - Login          │
+          │  - Menu Katalog   │   │  - Kelola Menu    │
+          │  - Galeri         │   │  - Kelola Galeri  │
+          │  - Coverage       │   │  - Kelola Lokasi  │
+          │  - Franchise      │   │  - Kelola Hero    │
+          └────────┬──────────┘   └────────┬──────────┘
+                   │  fetch API             │  fetch API
+                   └───────────┬────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  BACKEND API        │
+                    │  (Railway)          │
+                    │                     │
+                    │  Express.js         │
+                    │  + Prisma ORM       │
+                    │  + CORS             │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  DATABASE           │
+                    │  (Railway)          │
+                    │                     │
+                    │  PostgreSQL         │
+                    └─────────────────────┘</div>
+
+  <h3>Struktur Folder di Git Repository</h3>
+  <pre>
+Web-Kebab-Hejo/
+├── backend-kebab/          ← Deploy ke Railway
+│   ├── index.js            (Server Express + semua endpoint API)
+│   ├── prisma/
+│   │   └── schema.prisma   (Definisi model database)
+│   └── package.json
+│
+├── frontend/               ← Deploy ke Vercel (Landing Page)
+│   ├── src/
+│   │   ├── api.js          (URL koneksi ke backend)
+│   │   ├── components/     (HeroSection, MenuSection, dll)
+│   │   └── views/          (HomeView)
+│   └── package.json
+│
+└── admin-dashboard/        ← Deploy ke Vercel (Admin Panel)
+    ├── src/
+    │   ├── api.js          (URL koneksi ke backend)
+    │   ├── views/          (MenuView, GaleriView, dll)
+    │   └── layouts/        (DashboardLayout)
+    └── package.json</pre>
+
+  <h3>Cara Frontend Terhubung ke Backend</h3>
+  <p>Kedua frontend (landing page dan admin dashboard) menggunakan file <code>api.js</code> yang sama:</p>
+  <pre>
+// File: frontend/src/api.js  DAN  admin-dashboard/src/api.js
+export const API_BASE = import.meta.env.VITE_API_BASE
+  || 'https://backend-kebab-production.up.railway.app'</pre>
+
+  <p><strong>Cara kerjanya:</strong></p>
+  <ol>
+    <li>Saat development lokal, buat file <code>.env</code> berisi <code>VITE_API_BASE=http://localhost:3000</code></li>
+    <li>Saat sudah deploy, ubah <code>VITE_API_BASE</code> di Vercel ke URL Railway backend</li>
+    <li>Jika tidak ada env variable, otomatis pakai URL Railway sebagai fallback</li>
+  </ol>
+</div>
+
+<!-- ===================== BAGIAN 2: PERSIAPAN ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 2 — Persiapan Awal (Prasyarat)</h2>
+
+  <h3>Software yang Harus Diinstall</h3>
+  <table>
+    <tr><th>Software</th><th>Versi Minimum</th><th>Cara Cek</th></tr>
+    <tr><td>Node.js</td><td>v18+</td><td><code>node --version</code></td></tr>
+    <tr><td>Git</td><td>v2.30+</td><td><code>git --version</code></td></tr>
+    <tr><td>Railway CLI</td><td>v3+</td><td><code>railway --version</code></td></tr>
+    <tr><td>Vercel CLI</td><td>v30+</td><td><code>vercel --version</code></td></tr>
+  </table>
+
+  <h3>Install Railway CLI</h3>
+  <pre>npm install -g @railway/cli</pre>
+
+  <h3>Install Vercel CLI</h3>
+  <pre>npm install -g vercel</pre>
+
+  <h3>Akun yang Dibutuhkan</h3>
+  <ul>
+    <li><strong>Railway</strong> — Daftar di <code>https://railway.app</code> (bisa login via GitHub)</li>
+    <li><strong>Vercel</strong> — Daftar di <code>https://vercel.com</code> (bisa login via GitHub)</li>
+    <li><strong>GitHub</strong> — Repository harus sudah di-push ke GitHub</li>
+  </ul>
+</div>
+
+<!-- ===================== BAGIAN 3: DEPLOY RAILWAY ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 3 — Deploy Backend ke Railway</h2>
+
+  <p>Backend menggunakan <strong>Express.js + Prisma ORM + PostgreSQL</strong>. Deploy dilakukan melalui CLI Railway.</p>
+
+  <h3>3.1 Login ke Railway</h3>
+  <pre>railway login</pre>
+  <p>Akan membuka browser untuk autentikasi. Setelah berhasil, terminal akan menampilkan pesan sukses.</p>
+
+  <h3>3.2 Buat Project Baru (Pertama Kali Saja)</h3>
+  <pre>railway init</pre>
+  <p>Beri nama project, misalnya: <code>kebab-hejo</code></p>
+
+  <div class="note">
+    <strong>Catatan:</strong> Jika project sudah ada, skip langkah ini.
+    Cukup hubungkan ke project yang sudah ada dengan:
+    <pre style="margin-top: 8px;">railway link</pre>
+    Pilih project dan service yang sudah ada.
+  </div>
+
+  <h3>3.3 Buat Service Backend</h3>
+  <pre>cd backend-kebab
+railway service create backend-kebab</pre>
+
+  <h3>3.4 Tambah Database PostgreSQL</h3>
+  <p>Di dashboard Railway (<code>https://railway.app</code>):</p>
+  <ol>
+    <li>Buka project kamu</li>
+    <li>Klik <strong>"+ New"</strong> → <strong>"Database"</strong> → <strong>"Add PostgreSQL"</strong></li>
+    <li>Tunggu database selesai dibuat (sekitar 1 menit)</li>
+    <li>Klik database → tab <strong>"Connect"</strong> → copy <code>DATABASE_URL</code></li>
+  </ol>
+
+  <p>Atau via CLI:</p>
+  <pre>railway add</pre>
+  <p>Pilih <strong>PostgreSQL</strong>.</p>
+
+  <h3>3.5 Set Environment Variables</h3>
+  <p>Di dashboard Railway, buka service <code>backend-kebab</code> → tab <strong>"Variables"</strong>:</p>
+
+  <table>
+    <tr><th>Variabel</th><th>Nilai</th><th>Keterangan</th></tr>
+    <tr>
+      <td><code>DATABASE_URL</code></td>
+      <td><code>postgresql://user:pass@host:port/dbname</code></td>
+      <td>Otomatis tersedia setelah tambah PostgreSQL. Klik "+ New Variable" → "Add Reference" → "DATABASE_URL"</td>
+    </tr>
+    <tr>
+      <td><code>PORT</code></td>
+      <td><code>3000</code></td>
+      <td>Port server (Railway biasanya auto-set)</td>
+    </tr>
+  </table>
+
+  <div class="note">
+    <strong>Tips:</strong> Railway menyediakan variabel <code>DATABASE_URL</code> otomatis
+    jika kamu klik "Add Reference" → pilih "DATABASE_URL" dari database PostgreSQL yang sudah ditambahkan.
+    Tidak perlu copy-paste manual.
+  </div>
+
+  <h3>3.6 Deploy Backend</h3>
+  <pre>cd backend-kebab
+railway up --service backend-kebab</pre>
+
+  <div class="success">
+    <strong>Penjelasan perintah:</strong>
+    <ul style="margin-top: 8px;">
+      <li><code>railway up</code> — Upload dan deploy kode terbaru ke Railway</li>
+      <li><code>--service backend-kebab</code> — Tentukan service mana yang di-deploy</li>
+    </ul>
+  </div>
+
+  <p>Setelah deploy selesai, Railway akan menjalankan script:</p>
+  <pre>npx prisma db push && node index.js</pre>
+  <p>Ini akan membuat tabel-tabel di database secara otomatis, lalu menjalankan server.</p>
+
+  <h3>3.7 Jalankan Migrasi Database (Jika Schema Berubah)</h3>
+  <p>Setiap kali kamu mengubah file <code>prisma/schema.prisma</code>, jalankan:</p>
+  <pre>cd backend-kebab
+
+# Jalankan migrasi langsung di server Railway
+railway run npx prisma db push --service backend-kebab</pre>
+
+  <div class="danger">
+    <strong>Peringatan:</strong> <code>prisma db push</code> akan mengubah struktur database
+    secara langsung TANPA membuat file migrasi. Aman untuk development, tapi hati-hati
+    di production karena bisa menghapus data jika ada perubahan yang tidak kompatibel.
+  </div>
+
+  <h3>3.8 Seed Data Awal — Buat Admin Login</h3>
+  <p>Setelah database siap, kamu perlu membuat akun admin pertama secara manual.</p>
+
+  <p><strong>Option A: Via Railway Shell</strong></p>
+  <pre>railway shell --service backend-kebab
+
+# Di dalam shell Railway, jalankan Node.js
+node -e "
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+async function main() {
+  await prisma.admin.upsert({
+    where: { username: 'admin' },
+    update: {},
+    create: { username: 'admin', password: 'password123' }
+  });
+  console.log('Admin berhasil dibuat!');
+}
+main().finally(() => prisma.\$disconnect());
+"
+
+# Ketik 'exit' untuk keluar dari shell
+exit</pre>
+
+  <p><strong>Option B: Via API langsung (setelah backend jalan)</strong></p>
+  <pre># Tambah data admin langsung ke database via Prisma Studio lokal
+cd backend-kebab
+npx prisma studio</pre>
+  <p>Prisma Studio akan membuka di browser. Buka tabel <strong>Admin</strong>, klik <strong>"Add Record"</strong>, isi username dan password, lalu klik <strong>"Save"</strong>.</p>
+
+  <h3>3.9 Cek Apakah Backend Sudah Jalan</h3>
+  <pre># Cek log server
+railway logs --service backend-kebab
+
+# Atau buka URL backend di browser
+# https://backend-kebab-production.up.railway.app</pre>
+
+  <p>Jika backend sudah berjalan, kamu akan melihat response JSON dari endpoint root.</p>
+</div>
+
+<!-- ===================== BAGIAN 4: DEPLOY VERCEL FRONTEND ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 4 — Deploy Landing Page ke Vercel</h2>
+
+  <p>Landing page menggunakan <strong>Vue 3 + Vite + TailwindCSS</strong>.</p>
+
+  <h3>4.1 Login ke Vercel</h3>
+  <pre>vercel login</pre>
+  <p>Pilih metode login (GitHub, GitLab, Email, dll). Akan membuka browser.</p>
+
+  <h3>4.2 Deploy Pertama Kali</h3>
+  <pre>cd frontend
+vercel</pre>
+  <p>Vercel akan bertanya:</p>
+  <ol>
+    <li><strong>Set up and deploy?</strong> → <code>Y</code> (Yes)</li>
+    <li><strong>Which scope?</strong> → Pilih akun kamu</li>
+    <li><strong>Link to existing project?</strong> → <code>N</code> (No, buat baru)</li>
+    <li><strong>Project name?</strong> → <code>frontend</code> (atau nama lain)</li>
+    <li><strong>Directory?</strong> → Tekan Enter (default: <code>./</code>)</li>
+    <li><strong>Override settings?</strong> → <code>N</code></li>
+  </ol>
+
+  <div class="note">
+    <strong>Penting:</strong> Vercel otomatis mendeteksi framework Vite dan mengisi
+    build command (<code>vite build</code>) dan output directory (<code>dist</code>).
+  </div>
+
+  <h3>4.3 Set Environment Variable di Vercel</h3>
+  <pre>cd frontend
+vercel env add VITE_API_BASE production</pre>
+  <p>Masukkan URL backend Railway saat diminta:</p>
+  <pre>https://backend-kebab-production.up.railway.app</pre>
+
+  <div class="success">
+    <strong>Penjelasan:</strong> Variabel <code>VITE_API_BASE</code> akan dibaca oleh
+    <code>frontend/src/api.js</code> saat build, sehingga frontend tahu alamat backend
+    yang harus dihubungi.
+  </div>
+
+  <h3>4.4 Deploy ke Production</h3>
+  <pre>cd frontend
+vercel deploy --prod --yes --force</pre>
+
+  <div class="success">
+    <strong>Penjelasan flags:</strong>
+    <ul style="margin-top: 8px;">
+      <li><code>--prod</code> — Deploy ke domain production (bukan preview)</li>
+      <li><code>--yes</code> — Skip konfirmasi (langsung deploy)</li>
+      <li><code>--force</code> — Skip cache, build ulang dari awal</li>
+    </ul>
+  </div>
+
+  <h3>4.5 Cek Hasil</h3>
+  <p>Setelah deploy selesai, Vercel akan menampilkan URL:</p>
+  <pre>Production: https://frontend-phi-blond-37.vercel.app</pre>
+  <p>Buka URL tersebut di browser untuk memastikan landing page tampil dengan benar.</p>
+</div>
+
+<!-- ===================== BAGIAN 5: DEPLOY VERCEL ADMIN ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 5 — Deploy Admin Dashboard ke Vercel</h2>
+
+  <p>Admin Dashboard menggunakan <strong>Vue 3 + Vite + Custom CSS</strong>. Cara deploy mirip landing page.</p>
+
+  <h3>5.1 Deploy Pertama Kali</h3>
+  <pre>cd admin-dashboard
+vercel</pre>
+  <p>Ikuti pertanyaan yang sama seperti landing page. Beri nama project: <code>admin-dashboard</code></p>
+
+  <h3>5.2 Set Environment Variable</h3>
+  <pre>cd admin-dashboard
+vercel env add VITE_API_BASE production</pre>
+  <p>Masukkan URL backend Railway:</p>
+  <pre>https://backend-kebab-production.up.railway.app</pre>
+
+  <h3>5.3 Deploy ke Production</h3>
+  <pre>cd admin-dashboard
+vercel deploy --prod --yes --force</pre>
+
+  <h3>5.4 Cek Hasil</h3>
+  <pre>Production: https://admin-dashboard-alpha-sage-15.vercel.app</pre>
+  <p>Buka URL tersebut dan coba login dengan akun admin yang sudah dibuat di langkah 3.8.</p>
+
+  <div class="note">
+    <strong>Catatan:</strong> Admin dashboard dan landing page adalah 2 project terpisah
+    di Vercel meskipun dalam 1 repository Git. Masing-masing punya domain sendiri.
+  </div>
+</div>
+
+<!-- ===================== BAGIAN 6: UPDATE KODE ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 6 — Update Kode Setelah Perubahan</h2>
+
+  <p>Setelah kamu mengubah kode dan ingin deploy ulang, ikuti langkah berikut:</p>
+
+  <h3>Update Backend (Railway)</h3>
+  <pre># 1. Masuk ke folder backend
+cd backend-kebab
+
+# 2. Deploy ulang
+railway up --service backend-kebab</pre>
+
+  <div class="note">
+    <strong>Tips:</strong> Jika kamu mengubah <code>prisma/schema.prisma</code>,
+    Railway akan otomatis menjalankan <code>prisma db push</code> karena
+    ada di script <code>start</code>. Jadi tabel akan ter-update otomatis.
+  </div>
+
+  <h3>Update Landing Page (Vercel)</h3>
+  <pre># 1. Masuk ke folder frontend
+cd frontend
+
+# 2. Deploy ulang (paksa build fresh, skip cache)
+vercel deploy --prod --yes --force</pre>
+
+  <h3>Update Admin Dashboard (Vercel)</h3>
+  <pre># 1. Masuk ke folder admin-dashboard
+cd admin-dashboard
+
+# 2. Deploy ulang
+vercel deploy --prod --yes --force</pre>
+
+  <div class="danger">
+    <strong>Peringatan Cache:</strong> Selalu gunakan <code>--force</code> saat deploy
+    Vercel dari CLI. Tanpa flag ini, Vercel kadang memakai cache build lama
+    sehingga perubahan kode tidak ter-deploy.
+  </div>
+
+  <h3>Workflow Lengkap Setelah Ubah Kode</h3>
+  <pre># 1. Commit perubahan ke Git
+git add .
+git commit -m "deskripsi perubahan"
+git push
+
+# 2. Deploy backend (jika ada perubahan di backend-kebab/)
+cd backend-kebab
+railway up --service backend-kebab
+cd ..
+
+# 3. Deploy frontend (jika ada perubahan di frontend/)
+cd frontend
+vercel deploy --prod --yes --force
+cd ..
+
+# 4. Deploy admin (jika ada perubahan di admin-dashboard/)
+cd admin-dashboard
+vercel deploy --prod --yes --force
+cd ..</pre>
+</div>
+
+<!-- ===================== BAGIAN 7: TROUBLESHOOTING ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 7 — Troubleshooting & FAQ</h2>
+
+  <h3>Masalah: Backend Error 502 / Server Crash</h3>
+  <p><strong>Penyebab umum:</strong></p>
+  <ul>
+    <li>Database belum dibuat / <code>DATABASE_URL</code> belum di-set</li>
+    <li>Prisma client belum di-generate</li>
+    <li>Port sudah dipakai oleh process lain</li>
+  </ul>
+  <p><strong>Solusi:</strong></p>
+  <pre># Cek log error
+railway logs --service backend-kebab
+
+# Pastikan DATABASE_URL sudah ada di Railway variables
+# Jika belum, tambahkan via dashboard Railway</pre>
+
+  <h3>Masalah: Frontend CORS Error</h3>
+  <p><strong>Penyebab:</strong> Backend belum mengizinkan domain frontend di CORS.</p>
+  <p><strong>Solusi:</strong> Pastikan di <code>backend-kebab/index.js</code>, CORS sudah dikonfigurasi:</p>
+  <pre>app.use(cors({
+  origin: [
+    'https://frontend-phi-blond-37.vercel.app',
+    'https://admin-dashboard-alpha-sage-15.vercel.app',
+    'http://localhost:5173'
+  ]
+}))</pre>
+
+  <h3>Masalah: Vercel Menampilkan Kode Lama</h3>
+  <p><strong>Penyebab:</strong> Vercel menggunakan cache build lama.</p>
+  <p><strong>Solusi:</strong></p>
+  <pre># Deploy ulang dengan --force untuk skip cache
+vercel deploy --prod --yes --force</pre>
+
+  <h3>Masalah: API 404 di Railway (tapi jalan di lokal)</h3>
+  <p><strong>Penyebab:</strong> Kode terbaru belum ter-deploy ke Railway.</p>
+  <p><strong>Solusi:</strong></p>
+  <pre># Deploy ulang backend
+cd backend-kebab
+railway up --service backend-kebab</pre>
+
+  <h3>Masalah: Git Push Gagal (HTTPS)</h3>
+  <p><strong>Penyebab:</strong> Autentikasi HTTPS tidak bisa dilakukan di terminal.</p>
+  <p><strong>Solusi:</strong> Push manual dari terminal terpisah atau gunakan GitHub Desktop:</p>
+  <pre># Buka terminal baru, lalu:
+git push origin main</pre>
+
+  <h3>Masalah: Login Admin Gagal</h3>
+  <p><strong>Penyebab:</strong> Data admin belum ada di database.</p>
+  <p><strong>Solusi:</strong> Buat admin pertama via Prisma Studio:</p>
+  <pre>cd backend-kebab
+npx prisma studio</pre>
+  <p>Lalu buka tabel Admin → Add Record → isi username & password → Save.</p>
+
+  <h3>Masalah: Database Kosong / Tabel Belum Ada</h3>
+  <p><strong>Solusi:</strong></p>
+  <pre># Jalankan migrasi via Railway shell
+railway shell --service backend-kebab
+npx prisma db push
+exit</pre>
+</div>
+
+<!-- ===================== BAGIAN 8: RINGKASAN ===================== -->
+<div class="section">
+  <h2 class="section-title">Bagian 8 — Ringkasan URL & Perintah Penting</h2>
+
+  <h3>URL Production</h3>
+  <table>
+    <tr><th>Layanan</th><th>URL</th><th>Hosting</th></tr>
+    <tr>
+      <td>Backend API</td>
+      <td><code>https://backend-kebab-production.up.railway.app</code></td>
+      <td>Railway</td>
+    </tr>
+    <tr>
+      <td>Landing Page</td>
+      <td><code>https://frontend-phi-blond-37.vercel.app</code></td>
+      <td>Vercel</td>
+    </tr>
+    <tr>
+      <td>Admin Dashboard</td>
+      <td><code>https://admin-dashboard-alpha-sage-15.vercel.app</code></td>
+      <td>Vercel</td>
+    </tr>
+    <tr>
+      <td>Git Repository</td>
+      <td><code>https://github.com/KopalZ/Web-Kebab-Hejo</code></td>
+      <td>GitHub</td>
+    </tr>
+  </table>
+
+  <h3>Perintah Deploy (Quick Reference)</h3>
+  <table>
+    <tr><th>Aksi</th><th>Perintah</th></tr>
+    <tr>
+      <td>Deploy Backend</td>
+      <td><code>cd backend-kebab && railway up --service backend-kebab</code></td>
+    </tr>
+    <tr>
+      <td>Deploy Landing Page</td>
+      <td><code>cd frontend && vercel deploy --prod --yes --force</code></td>
+    </tr>
+    <tr>
+      <td>Deploy Admin Dashboard</td>
+      <td><code>cd admin-dashboard && vercel deploy --prod --yes --force</code></td>
+    </tr>
+    <tr>
+      <td>Cek Log Backend</td>
+      <td><code>railway logs --service backend-kebab</code></td>
+    </tr>
+    <tr>
+      <td>Migrasi Database</td>
+      <td><code>railway run npx prisma db push --service backend-kebab</code></td>
+    </tr>
+    <tr>
+      <td>Buka Prisma Studio</td>
+      <td><code>cd backend-kebab && npx prisma studio</code></td>
+    </tr>
+    <tr>
+      <td>Railway Shell</td>
+      <td><code>railway shell --service backend-kebab</code></td>
+    </tr>
+    <tr>
+      <td>Tambah Env Variable Vercel</td>
+      <td><code>vercel env add VITE_API_BASE production</code></td>
+    </tr>
+  </table>
+
+  <h3>Environment Variables</h3>
+  <table>
+    <tr><th>Variabel</th><th>Dimana</th><th>Nilai</th></tr>
+    <tr>
+      <td><code>DATABASE_URL</code></td>
+      <td>Railway (backend-kebab)</td>
+      <td>Otomatis dari Railway PostgreSQL</td>
+    </tr>
+    <tr>
+      <td><code>VITE_API_BASE</code></td>
+      <td>Vercel (frontend)</td>
+      <td><code>https://backend-kebab-production.up.railway.app</code></td>
+    </tr>
+    <tr>
+      <td><code>VITE_API_BASE</code></td>
+      <td>Vercel (admin-dashboard)</td>
+      <td><code>https://backend-kebab-production.up.railway.app</code></td>
+    </tr>
+  </table>
+
+  <h3>API Endpoints (Ringkasan)</h3>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Digunakan Oleh</th></tr>
+    <tr><td>GET</td><td>/api/products</td><td>Landing Page (MenuSection)</td></tr>
+    <tr><td>GET</td><td>/api/menus</td><td>Admin Dashboard (MenuView)</td></tr>
+    <tr><td>POST</td><td>/api/products</td><td>Admin Dashboard (MenuView)</td></tr>
+    <tr><td>PUT</td><td>/api/products/:id</td><td>Admin Dashboard (MenuView)</td></tr>
+    <tr><td>DELETE</td><td>/api/products/:id</td><td>Admin Dashboard (MenuView)</td></tr>
+    <tr><td>GET</td><td>/api/outlets</td><td>Landing + Admin (Coverage/LokasiView)</td></tr>
+    <tr><td>POST</td><td>/api/outlets</td><td>Admin Dashboard (LokasiView)</td></tr>
+    <tr><td>DELETE</td><td>/api/outlets/:id</td><td>Admin Dashboard (LokasiView)</td></tr>
+    <tr><td>GET</td><td>/api/gallery</td><td>Landing + Admin (Gallery/GaleriView)</td></tr>
+    <tr><td>POST</td><td>/api/gallery</td><td>Admin Dashboard (GaleriView)</td></tr>
+    <tr><td>DELETE</td><td>/api/gallery/:id</td><td>Admin Dashboard (GaleriView)</td></tr>
+    <tr><td>GET</td><td>/api/hero-slides</td><td>Landing + Admin (Hero/HeroView)</td></tr>
+    <tr><td>POST</td><td>/api/hero-slides</td><td>Admin Dashboard (HeroView)</td></tr>
+    <tr><td>DELETE</td><td>/api/hero-slides/:id</td><td>Admin Dashboard (HeroView)</td></tr>
+    <tr><td>GET</td><td>/api/settings/franchise-link</td><td>Landing + Admin (Hero/HeroView)</td></tr>
+    <tr><td>POST</td><td>/api/settings/franchise-link</td><td>Admin Dashboard (HeroView)</td></tr>
+    <tr><td>POST</td><td>/api/login</td><td>Admin Dashboard (LoginView)</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p><strong>Grand Kebab Hejo</strong> — Panduan Deploy</p>
+  <p>Dibuat: 18 Juni 2026 | Tech Stack: Vue 3 + Express.js + Prisma + PostgreSQL</p>
+  <p>Hosting: Railway (Backend) + Vercel (Frontend & Admin)</p>
+</div>
+
+</body>
+</html>

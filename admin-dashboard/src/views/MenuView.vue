@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { Save, Plus } from 'lucide-vue-next'
+import { Plus } from 'lucide-vue-next'
 import { API_BASE } from '@/api.js'
 
 const categories = ref([])
@@ -87,10 +87,6 @@ async function saveEdit(product) {
   }
 }
 
-function saveChanges() {
-  alert('Gunakan tombol "Edit" pada setiap menu untuk mengubah, atau "Tambah Menu" untuk menambah.')
-}
-
 const filterOptions = computed(() => {
   const names = categories.value.map((c) => c.name)
   return ['Semua', ...names]
@@ -166,10 +162,6 @@ async function deleteProduct(product) {
     <h2 class="page-title">Manajemen Katalog Menu</h2>
 
     <div class="btn-group">
-      <button type="button" class="btn-primary" @click="saveChanges">
-        <Save :size="18" />
-        Simpan Perubahan
-      </button>
       <button type="button" class="btn-primary" @click="addMenu">
         <Plus :size="18" />
         Tambah Menu

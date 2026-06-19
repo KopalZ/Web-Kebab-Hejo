@@ -1,4 +1,17 @@
 <script setup>
+/**
+ * Footer.vue - Bagian Bawah Halaman (Footer)
+ *
+ * Footer yang muncul di paling bawah landing page.
+ * Berisi logo, deskripsi singkat, link sosial media, dan info kontak.
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (semua data statis/hardcoded)
+ *
+ * FITUR:
+ *   - Logo dan tagline brand
+ *   - Link Instagram, WhatsApp, Google Maps, Telepon
+ *   - Copyright notice
+ */
 import { Instagram, MessageCircle, MapPin, Phone } from 'lucide-vue-next'
 import Button from './ui/Button.vue'
 import logo from '@/assets/logo.jpeg'

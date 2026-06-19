@@ -1,15 +1,62 @@
+<!--
+  ============================================================
+  GaleriView.vue — Halaman Admin untuk Mengelola Galeri Foto
+  ============================================================
+
+  FUNGSI HALAMAN INI:
+  Memungkinkan admin untuk upload, preview, dan hapus foto-foto
+  yang akan ditampilkan di bagian Galeri landing page.
+
+  FITUR UTAMA:
+  1. Upload banyak foto sekaligus (multi-select)
+  2. Preview foto sebelum diupload + isi catatan per foto
+  3. Hapus foto dari antrean sebelum diupload
+  4. Upload semua foto sekaligus ke database
+  5. Lihat daftar semua foto yang ada di database
+  6. Hapus foto permanen dari database
+
+  KONEKSI KE BACKEND (API):
+  ┌─────────────────────────────────────────────────────────────────┐
+  │ Method │ Endpoint              │ Fungsi                         │
+  ├─────────────────────────────────────────────────────────────────┤
+  │ GET    │ /api/gallery          │ Ambil semua foto galeri        │
+  │ POST   │ /api/gallery          │ Tambah foto baru ke database   │
+  │ DELETE │ /api/gallery/:id      │ Hapus foto dari database       │
+  └─────────────────────────────────────────────────────────────────┘
+
+  BASE URL diambil dari file api.js:
+  → https://backend-kebab-production.up.railway.app
+
+  CONTOH ALUR UPLOAD:
+  1. Admin klik "Pilih Gambar" → pilih beberapa file sekaligus
+  2. Setiap file muncul di "Antrean Upload" dengan preview
+  3. Admin bisa isi catatan untuk tiap foto
+  4. Admin klik "Upload Semua Sekarang"
+  5. Frontend kirim POST /api/gallery untuk setiap foto (paralel via Promise.all)
+  6. Setelah selesai, galeri di-refresh otomatis
+
+  CATATAN PENTING:
+  - File gambar HARUS sudah di-copy manual ke folder /public admin dashboard
+  - Yang dikirim ke backend HANYA nama file (bukan file binary)
+  - Backend simpan: { image_url: "nama_file.jpg", note: "catatan" }
+-->
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Plus, Trash2, UploadCloud, X } from 'lucide-vue-next'
 import { API_BASE } from '@/api.js'
 
+// Array penampung data foto yang sudah ada di database
 const galleryItems = ref([])
-const pendingUploads = ref([]) // Variabel baru buat nampung antrean banyak file
+// Array penampung antrean foto yang belum diupload (preview sebelum dikirim ke backend)
+const pendingUploads = ref([])
 
+// Pas halaman dibuka, langsung ambil data galeri dari backend
 onMounted(async () => {
   await fetchGallery()
 })
 
+// Fungsi ambil semua data galeri dari backend
+// Dipanggil saat halaman dibuka dan setiap kali ada perubahan (upload/hapus)
 async function fetchGallery() {
   try {
     const res = await fetch(API_BASE + '/api/gallery')

@@ -1,4 +1,36 @@
 <script setup>
+/**
+ * CoverageSection.vue - Section Jangkauan / Lokasi Cabang
+ *
+ * Section ini nampilin peta lokasi cabang Grand Kebab Hejo.
+ * Visitor bisa pilih kota dan lihat daftar outlet di kota tersebut,
+ * plus peta Google Maps embed yang nampilin area kota itu.
+ *
+ * KONEKSI KE BACKEND:
+ *   Endpoint: GET /api/outlets
+ *   File API: src/api.js (variabel API_BASE)
+ *   Cara panggil: fetch(API_BASE + '/api/outlets')
+ *
+ * DATA YANG DITERIMA DARI BACKEND:
+ *   [
+ *     { id: 1, name: "Bandung", outlets: [
+ *         { id: 1, name: "Cabang Dago", address: "Jl. Dago No. 1", gmaps_url: "...", cityId: 1 }
+ *     ]},
+ *     ...
+ *   ]
+ *
+ * CARA KERJA:
+ *   1. onMounted() → panggil GET /api/outlets ke backend
+ *   2. Olah data: bikin daftar kota + map outlet per kota
+ *   3. Kota dipecah jadi baris-baris (max 5 per baris) buat tampilan grid
+ *   4. Klik kota → tampilkan daftar outlet + update Google Maps embed
+ *
+ * FITUR:
+ *   - Google Maps embed (otomatis update sesuai kota yang dipilih)
+ *   - Tombol kota sebagai filter
+ *   - Daftar outlet dengan alamat dan link ke Google Maps
+ *   - Scrollable list kalau outlet banyak
+ */
 import { ref, computed, onMounted } from 'vue'
 import ScrollReveal from './ScrollReveal.vue'
 import { API_BASE } from '@/api.js'

@@ -1,18 +1,71 @@
+<!--
+  ================================================================
+  LokasiView.vue — Halaman Admin untuk Mengelola Lokasi Outlet
+  ================================================================
+
+  FUNGSI HALAMAN INI:
+  Memungkinkan admin untuk menambah dan menghapus daftar outlet/cabang
+  Kebab Hejo yang ditampilkan di halaman Coverage (Jangkauan) landing page.
+
+  FITUR UTAMA:
+  1. Tambah cabang baru (pilih kota, isi nama cabang, link Google Maps)
+  2. Lihat daftar semua cabang yang dikelompokkan per kota
+  3. Hapus cabang dari database
+  4. Data ditampilkan dalam tabel flat (baris per cabang, bukan per kota)
+
+  KONEKSI KE BACKEND (API):
+  ┌─────────────────────────────────────────────────────────────────┐
+  │ Method │ Endpoint              │ Fungsi                         │
+  ├─────────────────────────────────────────────────────────────────┤
+  │ GET    │ /api/outlets          │ Ambil semua kota + outletnya   │
+  │ POST   │ /api/outlets          │ Tambah outlet baru             │
+  │ DELETE │ /api/outlets/:id      │ Hapus outlet dari database     │
+  └─────────────────────────────────────────────────────────────────┘
+
+  BASE URL diambil dari file api.js:
+  → https://backend-kebab-production.up.railway.app
+
+  STRUKTUR DATA DARI BACKEND:
+  GET /api/outlets mengembalikan data berkelompok per kota:
+  [
+    {
+      id: 1,
+      name: "Bekasi",
+      outlets: [
+        { id: 10, name: "Alfamidi Cikarang", gmaps_url: "https://..." },
+        { id: 11, name: "Pasar Baru", gmaps_url: "https://..." }
+      ]
+    },
+    ...
+  ]
+
+  Frontend kemudian "meratakan" data ini jadi array satu dimensi
+  supaya gampang ditampilkan di tabel (variabel: flatLocations).
+
+  ALUR TAMBAH CABANG BARU:
+  1. Admin pilih kota dari dropdown (data kota dari GET /api/outlets)
+  2. Admin isi nama cabang dan link Google Maps
+  3. Admin klik "Simpan ke Database"
+  4. Frontend kirim POST /api/outlets dengan body:
+     { name, address, gmaps_url, cityId }
+  5. Setelah berhasil, tabel di-refresh otomatis
+-->
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Plus } from 'lucide-vue-next'
 import { API_BASE } from '@/api.js'
 
-// Variabel penampung data dari database
+// Array penampung daftar outlet yang sudah diratakan (flat) untuk ditampilkan di tabel
 const locations = ref([])
+// Array penampung daftar kota untuk dropdown "Pilih Kota"
 const availableCities = ref([])
 
-// Form input baru
-const newLocationName = ref('')
-const newLocationLink = ref('')
-const selectedCityId = ref('')
+// Form input untuk tambah cabang baru
+const newLocationName = ref('')   // Nama cabang baru
+const newLocationLink = ref('')   // Link Google Maps cabang baru
+const selectedCityId = ref('')    // ID kota yang dipilih dari dropdown
 
-// Pas halaman dibuka, langsung ambil data dari Backend
+// Pas halaman dibuka, langsung ambil data outlet dari backend
 onMounted(async () => {
   await fetchLocations()
 })

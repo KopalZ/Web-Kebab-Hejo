@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Guide Book Admin — Grand Kebab Hejo</title>
+  <style>
+    @page { margin: 20mm 18mm; size: A4; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: #fff;
+    }
+    .cover {
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; min-height: 90vh; text-align: center;
+      padding: 60px 20px;
+    }
+    .cover h1 { font-size: 42px; font-weight: 900; color: #02a554; margin-bottom: 8px; }
+    .cover h2 { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 8px; }
+    .cover .badge {
+      display: inline-block; background: #ffd339; color: #000;
+      font-weight: 800; padding: 8px 24px; border-radius: 6px;
+      border: 2px solid #000; font-size: 14px; margin-bottom: 30px;
+    }
+    .cover .info-box {
+      background: #f7f7f7; border: 1px solid #ddd; border-radius: 10px;
+      padding: 24px 32px; text-align: left; max-width: 500px; width: 100%;
+    }
+    .cover .info-box p { margin-bottom: 6px; font-size: 14px; }
+    .cover .info-box strong { color: #02a554; }
+    .toc { page-break-after: always; padding: 40px 0; }
+    .toc h2 {
+      font-size: 26px; margin-bottom: 24px; color: #02a554;
+      border-bottom: 3px solid #ffd339; padding-bottom: 8px;
+    }
+    .toc ul { list-style: none; }
+    .toc li { padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 15px; }
+    .section { page-break-before: always; padding: 40px 0; }
+    .section:first-of-type { page-break-before: auto; }
+    h2.section-title {
+      font-size: 28px; color: #02a554;
+      border-bottom: 3px solid #ffd339; padding-bottom: 8px; margin-bottom: 24px;
+    }
+    h3 { font-size: 20px; color: #1a1a1a; margin: 28px 0 12px; padding-left: 12px; border-left: 4px solid #02a554; }
+    h4 { font-size: 16px; color: #555; margin: 20px 0 8px; }
+    p { margin-bottom: 12px; font-size: 14px; }
+    ul, ol { margin: 0 0 16px 24px; font-size: 14px; }
+    li { margin-bottom: 6px; }
+    pre {
+      background: #1e1e2e; color: #cdd6f4; padding: 14px 18px;
+      border-radius: 8px; font-size: 13px; line-height: 1.6; margin: 12px 0 20px;
+    }
+    code {
+      font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 13px;
+    }
+    p code, li code { background: #f0f0f0; color: #c7254e; padding: 2px 6px; border-radius: 4px; }
+    table {
+      width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px;
+    }
+    th { background: #02a554; color: #fff; padding: 10px 14px; text-align: left; font-weight: 700; }
+    td { padding: 10px 14px; border-bottom: 1px solid #e0e0e0; }
+    tr:nth-child(even) td { background: #f9f9f9; }
+    .note {
+      background: #fff8e1; border-left: 4px solid #ffd339;
+      padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 13px;
+    }
+    .danger { background: #ffebee; border-left: 4px solid #c62828; }
+    .step {
+      background: #f0f7ff; border: 2px solid #2196f3; border-radius: 10px;
+      padding: 20px; margin: 16px 0;
+    }
+    .step h4 { margin-top: 0; color: #1565c0; }
+    .card {
+      background: #fff; border: 2px solid #e0e0e0; border-radius: 10px;
+      padding: 20px; margin: 16px 0;
+    }
+    .card h4 { margin-top: 0; }
+    .footer { text-align: center; padding: 40px 0; color: #999; font-size: 12px; border-top: 1px solid #eee; margin-top: 40px; }
+    @media print {
+      body { max-width: 100%; }
+      .section { page-break-before: always; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="badge">GUIDE BOOK ADMIN</div>
+  <h1>Grand Kebab Hejo</h1>
+  <h2>Panduan Penggunaan Admin Dashboard</h2>
+  <p style="color: #666; margin-bottom: 40px;">Untuk admin yang mengelola konten website</p>
+  <div class="info-box">
+    <p><strong>URL Admin:</strong> admin-dashboard-alpha-sage-15.vercel.app</p>
+    <p><strong>Username:</strong> admin</p>
+    <p><strong>Password:</strong> password123</p>
+    <p><strong>Landing Page:</strong> frontend-phi-blond-37.vercel.app</p>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>Daftar Isi</h2>
+  <ul>
+    <li><strong>1.</strong> Login ke Dashboard</li>
+    <li><strong>2.</strong> Dashboard Utama</li>
+    <li><strong>3.</strong> Hero Page — Banner &amp; Link WhatsApp</li>
+    <li><strong>4.</strong> Katalog Menu — Atur Produk</li>
+    <li><strong>5.</strong> Jangkauan — Kelola Cabang</li>
+    <li><strong>6.</strong> Galeri — Atur Foto</li>
+    <li><strong>7.</strong> Logout</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 class="section-title">1. Login ke Dashboard</h2>
+
+  <div class="card">
+    <h4>URL Admin Dashboard</h4>
+    <p><code>https://admin-dashboard-alpha-sage-15.vercel.app</code></p>
+  </div>
+
+  <h3>Langkah-langkah:</h3>
+  <ol>
+    <li>Buka URL admin di browser (Chrome/HP/PC)</li>
+    <li>Kamu akan langsung diarahkan ke halaman <strong>Login</strong></li>
+    <li>Masukkan data berikut:
+      <ul>
+        <li><strong>Email/Username:</strong> <code>admin</code></li>
+        <li><strong>Password:</strong> <code>password123</code></li>
+      </ul>
+    </li>
+    <li>Klik tombol <strong>"Masuk"</strong></li>
+    <li>Kalau berhasil → masuk ke halaman Dashboard</li>
+    <li>Kalau gagal → muncul pesan error merah (cek username & password)</li>
+  </ol>
+
+  <div class="note">
+    <strong>Tips:</strong> Password default bisa diganti nanti via database.
+    Hubungi developer jika ingin ganti password.
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">2. Dashboard Utama</h2>
+
+  <p>Halaman awal setelah login. Menampilkan kartu navigasi ke setiap modul:</p>
+
+  <table>
+    <tr><th>Kartu</th><th>Fungsi</th></tr>
+    <tr><td>Hero Page</td><td>Kelola banner slide &amp; link franchise WhatsApp</td></tr>
+    <tr><td>Katalog Menu</td><td>Tambah, edit, hapus produk menu</td></tr>
+    <tr><td>Jangkauan</td><td>Kelola kota dan cabang outlet</td></tr>
+    <tr><td>Galeri</td><td>Atur foto galeri landing page</td></tr>
+  </table>
+
+  <p>Klik kartu yang diinginkan, atau gunakan menu <strong>sidebar</strong> di sebelah kiri.</p>
+
+  <div class="note">
+    <strong>Tampilan:</strong> Dashboard terdiri dari Header (atas), Sidebar (kiri), dan Konten (kanan).
+    Tombol "Keluar" ada di pojok kanan atas header.
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">3. Hero Page — Banner &amp; Link WhatsApp</h2>
+
+  <p><strong>Fungsi:</strong> Mengatur slide banner yang tampil di halaman utama website, dan mengubah nomor WhatsApp untuk tombol "Gabung Franchise".</p>
+
+  <h3>A. Mengubah Link WhatsApp Franchise</h3>
+  <ol>
+    <li>Di halaman Hero, cari bagian <strong>"Tombol Franchise"</strong></li>
+    <li>Lihat input yang berisi link WhatsApp saat ini</li>
+    <li>Ubah nomor sesuai keinginan (contoh: <code>https://wa.me/6281289222234</code>)</li>
+    <li>Klik <strong>"Simpan"</strong></li>
+    <li>Perubahan langsung terlihat di landing page setelah di-refresh</li>
+  </ol>
+
+  <h3>B. Menambah Slide Banner Baru</h3>
+  <ol>
+    <li>Di bagian <strong>"Tambah Slide Baru"</strong>, isi:
+      <ul>
+        <li><strong>Path gambar:</strong> nama file gambar (contoh: <code>banner-promo.jpg</code>)</li>
+        <li><strong>Catatan:</strong> keterangan slide (opsional)</li>
+      </ul>
+    </li>
+    <li>Klik <strong>"Tambah Slide"</strong></li>
+    <li>Slide baru akan muncul di landing page sebagai carousel banner</li>
+  </ol>
+
+  <div class="note">
+    <strong>Catatan:</strong> File gambar harus sudah ada di folder <code>public/</code> atau sudah diupload.
+    API hanya menyimpan nama file, bukan file gambarnya.
+  </div>
+
+  <h3>C. Menghapus Slide</h3>
+  <ol>
+    <li>Lihat tabel <strong>"Daftar Slide Aktif"</strong></li>
+    <li>Cari slide yang ingin dihapus</li>
+    <li>Klik tombol <strong>"Hapus"</strong></li>
+    <li>Slide langsung hilang dari landing page</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2 class="section-title">4. Katalog Menu — Atur Produk</h2>
+
+  <p><strong>Fungsi:</strong> Menambah, mengedit, dan menghapus produk menu yang tampil di landing page.</p>
+
+  <h3>Filter Kategori</h3>
+  <p>Klik tombol kategori (Semua, Kebab Pot, Kebab, Burger, HotDog, Pizza, Canai) untuk menyaring produk.</p>
+
+  <h3>A. Tambah Menu Baru</h3>
+  <ol>
+    <li>Klik tombol <strong>"Tambah Menu"</strong> di bagian atas</li>
+    <li>Modal (popup) akan muncul dengan form:
+      <ul>
+        <li><strong>Nama menu</strong> — wajib diisi</li>
+        <li><strong>Harga</strong> — wajib diisi (angka, tanpa titik/koma)</li>
+        <li><strong>Kategori</strong> — wajib pilih dari dropdown</li>
+        <li><strong>Path gambar</strong> — opsional (contoh: <code>uploads/menu-baru.jpg</code>)</li>
+      </ul>
+    </li>
+    <li>Klik <strong>"Tambah"</strong></li>
+    <li>Produk baru langsung muncul di grid dan juga di landing page</li>
+  </ol>
+
+  <h3>B. Edit Menu</h3>
+  <ol>
+    <li>Cari produk yang ingin diedit</li>
+    <li>Klik tombol <strong>"Edit"</strong> pada kartu produk</li>
+    <li>Kartu berubah menjadi form:
+      <ul>
+        <li>Ubah <strong>nama</strong> di kolom teks</li>
+        <li>Ubah <strong>harga</strong> di kolom angka</li>
+        <li>Ubah <strong>kategori</strong> dari dropdown</li>
+        <li>Ubah <strong>gambar</strong> di kolom path</li>
+      </ul>
+    </li>
+    <li>Klik <strong>"Simpan"</strong> untuk menyimpan</li>
+    <li>Klik <strong>"Batal"</strong> jika tidak jadi mengubah</li>
+  </ol>
+
+  <h3>C. Hapus Menu</h3>
+  <ol>
+    <li>Cari produk yang ingin dihapus</li>
+    <li>Klik tombol <strong>"Hapus"</strong> pada kartu produk</li>
+    <li>Konfirmasi: akan muncul popup <code>Hapus "nama produk"?</code></li>
+    <li>Klik <strong>"OK"</strong> → produk langsung terhapus</li>
+    <li>Klik <strong>"Cancel"</strong> jika tidak jadi</li>
+  </ol>
+
+  <div class="note">
+    <strong>Tips:</strong> Setiap perubahan di admin langsung tersimpan di database.
+    Landing page akan menampilkan data terbaru setelah di-refresh (F5).
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">5. Jangkauan — Kelola Cabang</h2>
+
+  <p><strong>Fungsi:</strong> Mengelola daftar kota dan cabang outlet Grand Kebab Hejo beserta link Google Maps.</p>
+
+  <h3>A. Tambah Cabang Baru</h3>
+  <ol>
+    <li>Di halaman Jangkauan, isi form:
+      <ul>
+        <li><strong>Kota:</strong> pilih kota dari dropdown</li>
+        <li><strong>Nama Cabang:</strong> nama outlet (contoh: <code>Grand Kebab Cikarang</code>)</li>
+        <li><strong>Link Google Maps:</strong> URL lokasi di Google Maps</li>
+      </ul>
+    </li>
+    <li>Klik <strong>"Tambah Cabang"</strong></li>
+    <li>Cabang baru langsung muncul di tabel dan landing page</li>
+  </ol>
+
+  <h3>B. Hapus Cabang</h3>
+  <ol>
+    <li>Cari cabang di tabel</li>
+    <li>Klik tombol <strong>"Hapus"</strong> di baris yang sesuai</li>
+    <li>Cabang langsung terhapus dari database</li>
+  </ol>
+
+  <div class="note">
+    <strong>Mendapatkan Link Google Maps:</strong>
+    <ol>
+      <li>Buka Google Maps</li>
+      <li>Cari lokasi cabang</li>
+      <li>Klik "Bagikan" → "Salin link"</li>
+      <li>Tempel link di form</li>
+    </ol>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">6. Galeri — Atur Foto</h2>
+
+  <p><strong>Fungsi:</strong> Mengelola foto-foto galeri yang tampil di landing page.</p>
+
+  <h3>A. Upload Foto Baru</h3>
+  <ol>
+    <li>Klik area upload atau pilih file gambar dari komputer</li>
+    <li>Bisa pilih beberapa file sekaligus</li>
+    <li>Preview foto akan muncul dalam grid</li>
+    <li>Tiap foto bisa dikasih <strong>catatan</strong> (keterangan)</li>
+    <li>Klik <strong>"Upload Semua Sekarang"</strong></li>
+    <li>Semua foto akan masuk ke database</li>
+  </ol>
+
+  <div class="danger">
+    <strong>Penting!</strong> File gambar harus dicopy manual ke folder <code>admin-dashboard/public/</code>
+    sebelum upload. Hubungi developer untuk bantuan upload file.
+  </div>
+
+  <h3>B. Hapus Foto</h3>
+  <ol>
+    <li>Lihat tabel daftar foto yang sudah terupload</li>
+    <li>Klik <strong>"Hapus"</strong> di baris yang sesuai</li>
+    <li>Foto langsung terhapus dari database</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2 class="section-title">7. Logout</h2>
+
+  <ol>
+    <li>Klik tombol <strong>"Keluar"</strong> di pojok kanan atas</li>
+    <li>Konfirmasi: <code>Apakah Anda yakin ingin keluar?</code></li>
+    <li>Klik <strong>"OK"</strong> → kembali ke halaman Login</li>
+    <li>Sesi login akan hilang saat tab browser ditutup</li>
+  </ol>
+
+  <h3>Tips Keamanan</h3>
+  <ul>
+    <li>Selalu logout setelah selesai menggunakan dashboard</li>
+    <li>Jangan simpan password di browser untuk akun admin</li>
+    <li>Ganti password default sesegera mungkin</li>
+    <li>Gunakan di perangkat yang aman dan jaringan terpercaya</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <p><strong>Grand Kebab Hejo</strong> — Guide Book Admin</p>
+  <p>Ada pertanyaan? Hubungi developer.</p>
+</div>
+
+</body>
+</html>

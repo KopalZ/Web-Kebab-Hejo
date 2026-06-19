@@ -1,4 +1,12 @@
 <script setup>
+/**
+ * FAQSection.vue - Section FAQ (Pertanyaan Umum)
+ *
+ * Section accordion yang nampilin pertanyaan yang sering ditanya visitor.
+ * Klik pertanyaan → jawaban muncul/tutup dengan animasi.
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (data FAQ hardcoded)
+ */
 import { ref } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 import ScrollReveal from './ScrollReveal.vue'

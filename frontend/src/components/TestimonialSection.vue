@@ -1,4 +1,12 @@
 <script setup>
+/**
+ * TestimonialSection.vue - Section Testimoni
+ *
+ * Carousel testimoni dari partner/franchisee Grand Kebab Hejo.
+ * Ada tombol navigasi kiri/kanan dan auto-slide.
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (data testimoni hardcoded)
+ */
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-vue-next'
 import Button from './ui/Button.vue'

@@ -1,4 +1,22 @@
 <script setup>
+/**
+ * ScrollReveal.vue - Component Animasi Scroll
+ *
+ * Component wrapper yang bikin element muncul dengan animasi
+ * saat di-scroll ke viewport (pakai IntersectionObserver).
+ *
+ * KONEKSI KE BACKEND: TIDAK ADA (murni UI component)
+ *
+ * CARA PAKAI:
+ *   <ScrollReveal animation="fade-up" :delay="200" :duration="600">
+ *     <div>Konten yang mau dianimasi</div>
+ *   </ScrollReveal>
+ *
+ * PROPS:
+ *   animation → jenis animasi: fade-up, fade-down, fade-left, fade-right, zoom-in, zoom-out
+ *   delay     → jeda sebelum animasi mulai (ms)
+ *   duration  → durasi animasi (ms)
+ */
 import { ref, onMounted } from 'vue'
 
 const props = defineProps({

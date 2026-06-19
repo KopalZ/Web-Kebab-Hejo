@@ -1,15 +1,76 @@
+<!--
+  ================================================================
+  HeroView.vue — Halaman Admin untuk Mengelola Hero Banner
+  ================================================================
+
+  FUNGSI HALAMAN INI:
+  Memungkinkan admin untuk mengelola gambar-gambar slideshow (banner)
+  yang muncul di bagian atas (Hero Section) landing page, serta
+  mengatur link tombol "Franchise" yang ada di Hero Section.
+
+  DUA FITUR UTAMA:
+  ┌───────────────────────────────────────────────────────────────┐
+  │ 1. TOMBOL FRANCHISE                                          │
+  │    - Admin bisa ubah link yang dituju saat tombol "Franchise" │
+  │      di Hero Section diklik pengunjung                       │
+  │    - Contoh: https://wa.me/6281234567890                     │
+  │                                                               │
+  │ 2. SLIDE BANNER                                              │
+  │    - Admin bisa tambah/hapus gambar slideshow yang muncul     │
+  │      di Hero Section landing page                            │
+  │    - Setiap slide punya nama file gambar + catatan opsional   │
+  └───────────────────────────────────────────────────────────────┘
+
+  KONEKSI KE BACKEND (API):
+  ┌───────────────────────────────────────────────────────────────────────┐
+  │ Method │ Endpoint                       │ Fungsi                      │
+  ├───────────────────────────────────────────────────────────────────────┤
+  │ GET    │ /api/settings/franchise-link   │ Ambil link franchise aktif  │
+  │ POST   │ /api/settings/franchise-link   │ Simpan link franchise baru  │
+  │ GET    │ /api/hero-slides               │ Ambil semua slide banner    │
+  │ POST   │ /api/hero-slides               │ Tambah slide baru           │
+  │ DELETE │ /api/hero-slides/:id           │ Hapus slide dari database   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  BASE URL diambil dari file api.js:
+  → https://backend-kebab-production.up.railway.app
+
+  ALUR SIMPAN LINK FRANCHISE:
+  1. Admin isi/ubah link di input text
+  2. Klik "Simpan Link"
+  3. Frontend kirim POST /api/settings/franchise-link dengan body:
+     { value: "https://wa.me/..." }
+  4. Backend simpan/update di tabel Setting (key = "franchise-link")
+
+  ALUR TAMBAH SLIDE BARU:
+  1. Admin pilih file gambar dari komputer
+  2. Admin isi catatan (opsional)
+  3. Klik "Tambah Slide"
+  4. Frontend kirim POST /api/hero-slides dengan body:
+     { image_url: "nama_file.jpg", note: "catatan" }
+  5. File gambar HARUS sudah di-copy manual ke folder /public admin
+  6. Setelah berhasil, daftar slide di-refresh otomatis
+
+  CARA DATA MASUK KE LANDING PAGE:
+  - HeroSection.vue di frontend memanggil GET /api/hero-slides
+  - Gambar slide ditampilkan di slideshow otomatis (auto-rotate 5 detik)
+  - Tombol franchise memanggil GET /api/settings/franchise-link
+-->
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Save, Plus, Trash2 } from 'lucide-vue-next'
 import { API_BASE } from '@/api.js'
 
+// Link yang akan dituju saat tombol "Franchise" di Hero Section diklik
 const franchiseLink = ref('')
+// Array penampung daftar slide banner dari database
 const slides = ref([])
 
-// Variabel untuk tambah slide baru
-const newSlideFile = ref('')
-const newSlideNote = ref('')
+// Variabel untuk form tambah slide baru
+const newSlideFile = ref('')  // Nama file gambar yang dipilih
+const newSlideNote = ref('')  // Catatan opsional untuk slide
 
+// Pas halaman dibuka, ambil data franchise link + slide dari backend
 onMounted(async () => {
   await fetchData()
 })
